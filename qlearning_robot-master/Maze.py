@@ -26,23 +26,64 @@ class Maze(object):
 
     #return the start position of the robot
     def get_start_pos(self):
-        #TODO
-        return (0,0)
+        start_point = (np.where(self.data==2)[0][0], np.where(self.data==2)[1][0])
+        return start_point
 
     #return the goal position of the robot
     def get_goal_pos(self):
-        #TODO
-        return (0,0)
+        end_point = (np.where(self.data==3)[0][0], np.where(self.data==3)[1][0])
+        return end_point
 
     # move the robot and report new position and reward
     # Note that robot cannot step into obstacles nor step out of the map
     # Note that robot may ignore the given action and choose a random action
     def move(self, oldpos, a):
-        #TODO
-        #newpos = oldpos
-        newpos = (oldpos[0], oldpos[1])
+        new_column = oldpos[0]
+        new_row = oldpos[1]
         reward = 0
+        # [up:a==0] [down:a==1]  [left:a==2] [right:a==3]
+        # go up
+        if(a == 0):
+            new_column = new_column - 1
+        # go down
+        elif(a == 1):
+            new_column = new_column + 1
+        # go left
+        elif(a == 2):
+            new_row = new_row - 1
+        # go right
+        elif(a == 3):
+            new_row = new_row + 1
+        else:
+            print("wrong a:", a)
 
+        # boundary check, if exceed reset column and row
+        if (new_column < 0 or new_column > 9 or new_row < 0 or new_row > 9):
+            new_column = oldpos[0]
+            new_row = oldpos[1]
+            reward = -1
+        # value check
+        else:
+            value = self.data[new_column][new_row]
+            # walk into a trap
+            if (value == 5):
+                reward = -100
+            # walk into a wall and reset column and row
+            elif (value == 1):
+                reward = -1
+                new_column = oldpos[0]
+                new_row = oldpos[1]
+            # walk into an empty place or start point
+            elif (value == 0 or value == 2):
+                reward = -1
+            # walk into destination
+            elif (value == 3):
+                reward = 1
+            else:
+                print("wrong value:", value)
+
+
+        newpos = (new_column, new_row)
         # return the new, legal location and reward
         return newpos, reward
 
