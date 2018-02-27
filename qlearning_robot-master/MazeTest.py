@@ -32,7 +32,7 @@ class MazeTest(unittest.TestCase):
         move_down = 1
         move_left = 2
         move_right = 3
-
+        self.testClass = Maze(self.maze_matrix, not_disable_random = False)
         # move down newpos should be (8, 4) and reward should be -1
         newpos, reward = self.testClass.move(start_point, move_up)
         self.assertEqual((8, 4), newpos, "newpos should be (8, 4)")
@@ -82,6 +82,39 @@ class MazeTest(unittest.TestCase):
         newpos, reward = self.testClass.move((1, 0), move_up)
         self.assertEqual((0, 0), newpos, "newpos should be (0, 0)")
         self.assertEqual(1, reward, "reward should be 1")
+
+
+    # test invalid cases
+    def test_move_with_invalid_argu(self):
+        self.assertRaises(ValueError, self.testClass.move, (9, 10), 1)
+        self.assertRaises(ValueError, self.testClass.move, (10, 9), 2)
+        self.assertRaises(ValueError, self.testClass.move, (9, 9), 5)
+
+
+    def test_randomly_pick_action(self):
+        action0_count = 0
+        action1_count = 0
+        action2_count = 0
+        action3_count = 0
+
+        total_times = 1000000
+        
+        for i in range(total_times):
+            a = self.testClass.randomly_pick_action(0) # choose action 0 as orginal action
+            if (a == 0):
+                action0_count += 1
+            elif (a == 1):
+                action1_count += 1
+            elif (a == 2):
+                action2_count += 1
+            else:
+                action3_count += 1
+        self.assertTrue(action0_count < total_times * 0.86 and action0_count > total_times * 0.84, "action 0 count should between 0.84~0.86 of the data")
+        self.assertTrue(action1_count < total_times * 0.06 and action1_count > total_times * 0.04, "action 1 count should between 0.04~0.06 of the data")
+        self.assertTrue(action2_count < total_times * 0.06 and action2_count > total_times * 0.04, "action 2 count should between 0.04~0.06 of the data")
+        self.assertTrue(action3_count < total_times * 0.06 and action3_count > total_times * 0.04, "action 3 count should between 0.04~0.06 of the data")
+
+        print("\n action 0 count:", action0_count, "\n action 1 count:", action1_count, "\n action 2 count:", action2_count, "\n action 3 count", action3_count)
 
 if __name__ =='__main__':  
     unittest.main()

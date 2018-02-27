@@ -14,7 +14,8 @@ class Maze(object):
             reward_quicksand = -100,
             reward_goal = 1,
             random_walk_rate = 0.2,
-            verbose = False):
+            verbose = False,
+            not_disable_random = True):
 
         self.data = data
         self.reward_walk = reward_walk
@@ -29,11 +30,12 @@ class Maze(object):
         self.move_right = 3
         self.min_boundary = 0
         self.max_boundary = 9
-        self.empty_point = 0
-        self.wall = 1
-        self.start_point = 2
-        self.end_point = 3
-        self.trap = 5
+        self.empty_point = 0 # value for empty point
+        self.obstacle = 1 # value for obstacle
+        self.start_point = 2 # value for start point
+        self.end_point = 3 # value for end point
+        self.quick_sand = 5 # value for a quick_sand
+        self.not_disable_random = not_disable_random # for UT only
 
     #return the start position of the robot
     def get_start_pos(self):
@@ -53,6 +55,13 @@ class Maze(object):
         new_column = oldpos[1]
         reward = 0
 
+        if (self.is_out_of_boundary(new_row, new_column)):
+            raise ValueError('Current row or cloumn is out of boundary', new_row, new_column)
+        
+        # For UT only
+        if (self.not_disable_random):
+            a = self.randomly_pick_action(a)
+
         if(a == self.move_up):
             new_row -= 1
         elif(a == self.move_down):
@@ -62,18 +71,18 @@ class Maze(object):
         elif(a == self.move_right):
             new_column += 1
         else:
-            print("wrong a:", a)
+            raise ValueError('Current action is invalid', a)
 
-        # boundary check, if exceed reset column and row
-        if (new_column < self.min_boundary or new_column > self.max_boundary or new_row < self.min_boundary or new_row > self.max_boundary):
+        # boundary check after move, if exceed reset column and row
+        if (self.is_out_of_boundary(new_row, new_column)):
             new_row = oldpos[0]
             new_column = oldpos[1]
-            reward = -1
-        # value check
+            reward = self.reward_obstacle
         else:
             value = self.data[new_row][new_column]
             reward = self.retrieve_reward(value)
-            if (value == self.wall):
+            # reset position if target is obstacle
+            if (value == self.obstacle):
                 new_row = oldpos[0]
                 new_column = oldpos[1]
 
@@ -81,17 +90,39 @@ class Maze(object):
         # return the new, legal location and reward
         return newpos, reward
 
+    # check if out of array boundary
+    def is_out_of_boundary(self, row, column):
+        return column < self.min_boundary or column > self.max_boundary or row < self.min_boundary or row > self.max_boundary
+
+    # randomly choose action
+    def randomly_pick_action(self, a):
+        action_array = [self.move_up, self.move_down, self.move_left, self.move_right]
+        action_array.remove(a)
+        p = rand.random()
+        random_rate_for_per_action = self.random_walk_rate / 4
+        rate_for_orignal_action = 1 - self.random_walk_rate + random_rate_for_per_action
+        if (p >= 0 and p < rate_for_orignal_action):
+            return a
+        elif (p >= rate_for_orignal_action and p < rate_for_orignal_action + random_rate_for_per_action):
+            return action_array[0]
+        elif (p >= rate_for_orignal_action + random_rate_for_per_action and p < rate_for_orignal_action + random_rate_for_per_action * 2):
+            return action_array[1]
+        else:
+            return action_array[2]
+
+
     # retrieve reward according to current point value
     def retrieve_reward(self, value):
-        if (value == self.trap):
-            return -100
-        elif (value == self.wall or value == self.empty_point or value == self.start_point):
-            return -1
+        if (value == self.quick_sand):
+            return self.reward_quicksand
+        elif (value == self.obstacle):
+            return self.reward_obstacle
+        elif (value == self.empty_point or value == self.start_point):
+            return self.reward_walk
         elif (value == self.end_point):
-            return 1
+            return self.reward_goal
         else:
-            print("wrong value:", value)
-            return 0
+            raise ValueError('Current value is invalid', value)
 
     # print out the map
     def print_map(self):
