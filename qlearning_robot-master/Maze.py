@@ -6,6 +6,7 @@ import numpy as np
 import random as rand
 
 class Maze(object):
+
     def __init__(self,
             data,
             reward_walk = -1,
@@ -15,7 +16,6 @@ class Maze(object):
             random_walk_rate = 0.2,
             verbose = False):
 
-        #TODO
         self.data = data
         self.reward_walk = reward_walk
         self.reward_obstacle = reward_obstacle
@@ -23,69 +23,75 @@ class Maze(object):
         self.reward_goal = reward_goal
         self.random_walk_rate = random_walk_rate
         self.verbose = verbose
+        self.move_up = 0
+        self.move_down = 1
+        self.move_left = 2
+        self.move_right = 3
+        self.min_boundary = 0
+        self.max_boundary = 9
+        self.empty_point = 0
+        self.wall = 1
+        self.start_point = 2
+        self.end_point = 3
+        self.trap = 5
 
     #return the start position of the robot
     def get_start_pos(self):
-        start_point = (np.where(self.data==2)[0][0], np.where(self.data==2)[1][0])
+        start_point = (np.where(self.data==self.start_point)[0][0], np.where(self.data==self.start_point)[1][0])
         return start_point
 
     #return the goal position of the robot
     def get_goal_pos(self):
-        end_point = (np.where(self.data==3)[0][0], np.where(self.data==3)[1][0])
+        end_point = (np.where(self.data==self.end_point)[0][0], np.where(self.data==self.end_point)[1][0])
         return end_point
 
     # move the robot and report new position and reward
     # Note that robot cannot step into obstacles nor step out of the map
     # Note that robot may ignore the given action and choose a random action
     def move(self, oldpos, a):
-        new_column = oldpos[0]
-        new_row = oldpos[1]
+        new_row = oldpos[0]
+        new_column = oldpos[1]
         reward = 0
-        # [up:a==0] [down:a==1]  [left:a==2] [right:a==3]
-        # go up
-        if(a == 0):
-            new_column = new_column - 1
-        # go down
-        elif(a == 1):
-            new_column = new_column + 1
-        # go left
-        elif(a == 2):
-            new_row = new_row - 1
-        # go right
-        elif(a == 3):
-            new_row = new_row + 1
+
+        if(a == self.move_up):
+            new_row -= 1
+        elif(a == self.move_down):
+            new_row += 1
+        elif(a == self.move_left):
+            new_column -= 1
+        elif(a == self.move_right):
+            new_column += 1
         else:
             print("wrong a:", a)
 
         # boundary check, if exceed reset column and row
-        if (new_column < 0 or new_column > 9 or new_row < 0 or new_row > 9):
-            new_column = oldpos[0]
-            new_row = oldpos[1]
+        if (new_column < self.min_boundary or new_column > self.max_boundary or new_row < self.min_boundary or new_row > self.max_boundary):
+            new_row = oldpos[0]
+            new_column = oldpos[1]
             reward = -1
         # value check
         else:
-            value = self.data[new_column][new_row]
-            # walk into a trap
-            if (value == 5):
-                reward = -100
-            # walk into a wall and reset column and row
-            elif (value == 1):
-                reward = -1
-                new_column = oldpos[0]
-                new_row = oldpos[1]
-            # walk into an empty place or start point
-            elif (value == 0 or value == 2):
-                reward = -1
-            # walk into destination
-            elif (value == 3):
-                reward = 1
-            else:
-                print("wrong value:", value)
+            value = self.data[new_row][new_column]
+            reward = self.retrieve_reward(value)
+            if (value == self.wall):
+                new_row = oldpos[0]
+                new_column = oldpos[1]
 
-
-        newpos = (new_column, new_row)
+        newpos = (new_row, new_column)
         # return the new, legal location and reward
         return newpos, reward
+
+    # retrieve reward according to current point value
+    def retrieve_reward(self, value):
+        if (value == self.trap):
+            return -100
+        elif (value == self.wall or value == self.empty_point or value == self.start_point):
+            return -1
+        elif (value == self.end_point):
+            return 1
+        else:
+            print("wrong value:", value)
+            return 0
 
     # print out the map
     def print_map(self):
