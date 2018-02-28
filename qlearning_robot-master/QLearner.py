@@ -1,5 +1,5 @@
 """
-Template for implementing QLearner  
+Template for implementing QLearner
 """
 
 import numpy as np
@@ -21,6 +21,7 @@ class QLearner(object):
         self.num_actions = num_actions
         self.s = 0
         self.a = 0
+        self.Qtable = np.zeros((self.s, self.a))
 
     def querysetstate(self, s):
         """
@@ -28,9 +29,8 @@ class QLearner(object):
         @param s: The new state
         @returns: The selected action
         """
-        #TODO
         self.s = s
-        action = rand.randint(0, self.num_actions-1)
+        action = self.chooseAction(s)
         if self.verbose: print("s =", s,"a =",action)
         return action
 
@@ -42,8 +42,21 @@ class QLearner(object):
         @param r: reward
         @returns: The selected action
         """
-        #TODO
-        action = rand.randint(0, self.num_actions-1)
+        # choose action
+        action = self.chooseAction(s_prime)
         if self.verbose: print("s =", s_prime,"a =",action,"r =",r)
+        # update Q table
+        self.Qtable[self.s][action] = r + self.alhpa * self.Qtable[s_prime].argmax()
+        # update alpha, rar and state
+        self.alpha *= self.gamma
+        self.rar *= self.radr
+        self.s = s_prime
+
         return action
 
+    def chooseAction(self, s):
+        p = rand.random()
+        if (self.rar > p):
+            return rand.randint(0, self.num_actions-1)
+        else:
+            return self.Qtable[s].argmax()

@@ -1,10 +1,10 @@
-# This is a unit test case for Maze.py
 import numpy as np
 import pandas as pd
 import unittest
 from Maze import Maze
 from mazeqlearning import to_state
 
+# Unit test case
 class MazeTest(unittest.TestCase):
 
     # init
@@ -17,7 +17,7 @@ class MazeTest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    
+
     def test_get_start_pos(self):
         start_point = (9, 4)
         self.assertEqual(start_point, self.testClass.get_start_pos(), "start point should be (9, 4)")
@@ -99,7 +99,7 @@ class MazeTest(unittest.TestCase):
         action3_count = 0
 
         total_times = 1000000
-        
+
         for i in range(total_times):
             a = self.testClass.randomly_pick_action(0) # choose action 0 as orginal action
             if (a == 0):
@@ -124,5 +124,5 @@ class MazeTest(unittest.TestCase):
         self.assertEqual(to_state((2, 0)), 20, "state should be 20")
         self.assertEqual(to_state((9, 9)), 99, "state should be 99")
 
-if __name__ =='__main__':  
+if __name__ =='__main__':
     unittest.main()
