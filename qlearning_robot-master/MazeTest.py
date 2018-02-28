@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import unittest
 from Maze import Maze
+from mazeqlearning import to_state
 
 class MazeTest(unittest.TestCase):
 
@@ -114,7 +115,14 @@ class MazeTest(unittest.TestCase):
         self.assertTrue(action2_count < total_times * 0.06 and action2_count > total_times * 0.04, "action 2 count should between 0.04~0.06 of the data")
         self.assertTrue(action3_count < total_times * 0.06 and action3_count > total_times * 0.04, "action 3 count should between 0.04~0.06 of the data")
 
-        print("\n action 0 count:", action0_count, "\n action 1 count:", action1_count, "\n action 2 count:", action2_count, "\n action 3 count", action3_count)
+        #print("\n action 0 count:", action0_count, "\n action 1 count:", action1_count, "\n action 2 count:", action2_count, "\n action 3 count", action3_count)
+
+    def test_to_state(self):
+        self.assertEqual(to_state((0, 0)), 0, "state should be 0")
+        self.assertEqual(to_state((0, 1)), 1, "state should be 1")
+        self.assertEqual(to_state((1, 9)), 19, "state should be 19")
+        self.assertEqual(to_state((2, 0)), 20, "state should be 20")
+        self.assertEqual(to_state((9, 9)), 99, "state should be 99")
 
 if __name__ =='__main__':  
     unittest.main()

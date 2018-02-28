@@ -35,7 +35,7 @@ class Maze(object):
         self.start_point = 2 # value for start point
         self.end_point = 3 # value for end point
         self.quick_sand = 5 # value for a quick_sand
-        self.not_disable_random = not_disable_random # for UT only
+        self.not_disable_random = not_disable_random # disable random move or not, for unit test only
 
     #return the start position of the robot
     def get_start_pos(self):

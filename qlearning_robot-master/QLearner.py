@@ -34,11 +34,12 @@ class QLearner(object):
         if self.verbose: print("s =", s,"a =",action)
         return action
 
+    # I don't tink query is a good name for this method since we need to update something
     def query(self,s_prime,r):
         """
         @summary: Update the Q table and return an action
         @param s_prime: The new state
-        @param r: The ne state
+        @param r: reward
         @returns: The selected action
         """
         #TODO

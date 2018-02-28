@@ -9,9 +9,14 @@ import Maze
 
 
 # convert the position to a single integer state
+# only work for 10 * 10 matrix : )
 def to_state(pos):
-    #TODO
-    return 0
+    row = pos[0]
+    column = pos[1]
+    if (row == 0):
+        return column
+    else:
+        return int(str(row) + str(column))
 
 
 # train learner to go through maze multiple epochs
