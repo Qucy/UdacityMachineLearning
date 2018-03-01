@@ -27,14 +27,13 @@ def train(maze, learner, epochs=500, timeout = 100000, verbose = False):
     rewards = np.zeros(epochs)
     goal = maze.get_goal_pos()
     for i in range(epochs):
+        reward = 0
         current_time = 0
         total_reward = 0
         robopos = maze.get_start_pos()
         action = learner.querysetstate(to_state(robopos))
-        while (robopos != goal and current_time < timeout):
+        while (robopos != goal and current_time < timeout and reward != -100):
             newpos, reward = maze.move(robopos, action)
-            if (-100 == reward):
-                print("epochs:", i, "S:", robopos, "A:", action, " S':", newpos, "R:", reward)
             robopos = newpos
             action = learner.query(to_state(robopos), reward)
             total_reward += reward
@@ -54,8 +53,9 @@ def maze_qlearning(filename):
     #initialize learner object
     qlearner = ql.QLearner(verbose=False)
     #execute train(maze, learner)
-    rewards = train(maze, qlearner, epochs=1, timeout=1000)
+    rewards = train(maze, qlearner, epochs=50, timeout=10000)
     #return median of all rewards
+    print(np.median(rewards))
     return rewards
 
 if __name__=="__main__":

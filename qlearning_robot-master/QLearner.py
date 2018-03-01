@@ -25,7 +25,7 @@ class QLearner(object):
         self.radr = radr
         self.s = 0
         self.a = 0
-        self.Qtable = np.zeros((self.num_states, self.num_actions))
+        self.Q = np.zeros((self.num_states, self.num_actions))
 
     def querysetstate(self, s):
         """
@@ -51,9 +51,9 @@ class QLearner(object):
         action = self.choose_action(s_prime)
         if self.verbose: print("s =", s_prime,"a =",action,"r =",r)
         # update Q table
-        self.Qtable[self.s][self.a] = r + self.alpha * self.Qtable[s_prime].argmax()
-        # update alpha, rar and state
-        self.alpha *= self.gamma
+        self.Q[self.s][self.a] = (1 - self.alpha) * self.Q[self.s][self.a] +  self.alpha * (r + self.alpha * self.Q[self.s][self.Q[s_prime].argmax()])
+        # self.Q[self.s, self.a] = (1 - self.alpha) * (self.Q[self.s, self.a]) + self.alpha * (r + self.gamma * self.Q[s_prime,np.argmax(self.Q[s_prime,:])])
+        # update rar and state
         self.rar *= self.radr
         self.s = s_prime
         self.a = action
@@ -65,4 +65,4 @@ class QLearner(object):
         if (self.rar > rand.random()):
             return rand.randint(0, self.num_actions-1)
         else:
-            return self.Qtable[s].argmax()
+            return self.Q[s].argmax()
