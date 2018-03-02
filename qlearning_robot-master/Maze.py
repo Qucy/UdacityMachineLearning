@@ -51,13 +51,9 @@ class Maze(object):
     # Note that robot cannot step into obstacles nor step out of the map
     # Note that robot may ignore the given action and choose a random action
     def move(self, oldpos, a):
-        new_row = oldpos[0]
-        new_column = oldpos[1]
+        new_row, new_column = oldpos
         reward = 0
 
-        if (self.is_out_of_boundary(new_row, new_column)):
-            raise ValueError('Current row or cloumn is out of boundary', new_row, new_column)
-        
         # For UT only
         if (self.not_disable_random):
             a = self.randomly_pick_action(a)
@@ -75,17 +71,15 @@ class Maze(object):
 
         # boundary check after move, if exceed reset column and row
         if (self.is_out_of_boundary(new_row, new_column)):
-            new_row = oldpos[0]
-            new_column = oldpos[1]
+            new_row, new_column = oldpos # reset
             reward = self.reward_obstacle
         else:
             value = self.data[new_row][new_column]
             reward = self.retrieve_reward(value)
             # reset position if target is obstacle
             if (value == self.obstacle):
-                new_row = oldpos[0]
-                new_column = oldpos[1]
-
+                new_row, new_column = oldpos # reset
+                
         newpos = (new_row, new_column)
         # return the new, legal location and reward
         return newpos, reward
@@ -145,40 +139,22 @@ class Maze(object):
 
     # print the map and the trail of robot
     def print_trail(self, trail):
-        data = self.data
-        trail = data.copy()
-        for pos in trail:
-
-            #check if position is valid
-            if not (    0 <= pos[0] < data.shape[0]
-                    and 0 <= pos[1] < data.shape[1]):
-                print("Warning: Invalid position in trail, out of the world")
-                return
-
-            if data[pos] == 1:  # Obstacle
-                print("Warning: Invalid position in trail, step on obstacle")
-                return
-
-            #mark the trail
-            if data[pos] == 0:  # mark enter empty space
-                trail[pos] = "."
-            if data[pos] == 5:  # make enter quicksand
-                trail[pos] = "@"
-
         print("--------------------")
         for row in range(0, trail.shape[0]):
             for col in range(0, trail.shape[1]):
-                if trail[row, col] == 0:  # Empty space
-                    trail[row, col] = " "
-                if trail[row, col] == 1:  # Obstacle
-                    trail[row, col] = "X"
-                if trail[row, col] == 2:  # Start
-                    trail[row, col] = "S"
-                if trail[row, col] == 3:  # Goal
-                    trail[row, col] = "G"
-                if trail[row, col] == 5:  # Quick sand
-                    trail[row, col] = "~"
-
-                print(trail[row, col], end="")
+                if trail[row,col] == 0: # Empty space
+                    print(" ",end="")
+                if trail[row,col] == 1: # Obstacle
+                    print("X",end="")
+                if trail[row,col] == 2: # Start
+                    print("S",end="")
+                if trail[row,col] == 3: # Goal
+                    print("G",end="")
+                if trail[row,col] == 5: # Quick sand
+                    print("~",end="")
+                if trail[row,col] == 98: # enter empty sapce
+                    print(".",end="")
+                if trail[row,col] == 99: # enter quicksand
+                    print("@",end="")
             print()
         print("--------------------")

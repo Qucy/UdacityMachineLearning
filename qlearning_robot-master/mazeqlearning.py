@@ -26,22 +26,33 @@ def to_state(pos):
 def train(maze, learner, epochs=500, timeout = 100000, verbose = False):
     rewards = np.zeros(epochs)
     goal = maze.get_goal_pos()
+    start_point = maze.get_start_pos()
     for i in range(epochs):
         reward = 0
         current_time = 0
         total_reward = 0
-        robopos = maze.get_start_pos()
+        robopos = start_point
         action = learner.querysetstate(to_state(robopos))
-        while (robopos != goal and current_time < timeout and reward != -100):
+        trail = maze.data.copy()
+        while (robopos != goal and current_time < timeout):
             newpos, reward = maze.move(robopos, action)
+            # mark trail
+            if (reward != -100):
+                trail[robopos] = 98
+                trail[newpos] = 98
+            else:
+                trail[newpos] = 99
+            
             robopos = newpos
             action = learner.query(to_state(robopos), reward)
             total_reward += reward
             current_time += 1
-        #print(i," reward:", total_reward)
+        
+        # print trail
+        #maze.print_trail(trail)
         rewards[i] = total_reward
-
-    print(rewards)
+        #print("epoch:", i, "total reward:", total_reward)
+    #print(rewards)
     return rewards
 
 
@@ -53,10 +64,10 @@ def maze_qlearning(filename):
     #initialize learner object
     qlearner = ql.QLearner(verbose=False)
     #execute train(maze, learner)
-    rewards = train(maze, qlearner, epochs=50, timeout=10000)
+    rewards = train(maze, qlearner)
     #return median of all rewards
     print(np.median(rewards))
-    return rewards
+    return np.median(rewards)
 
 if __name__=="__main__":
     rand.seed(5)

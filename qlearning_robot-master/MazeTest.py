@@ -87,8 +87,6 @@ class MazeTest(unittest.TestCase):
 
     # test invalid cases
     def test_move_with_invalid_argu(self):
-        self.assertRaises(ValueError, self.testClass.move, (9, 10), 1)
-        self.assertRaises(ValueError, self.testClass.move, (10, 9), 2)
         self.assertRaises(ValueError, self.testClass.move, (9, 9), 5)
 
 

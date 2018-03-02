@@ -51,8 +51,7 @@ class QLearner(object):
         action = self.choose_action(s_prime)
         if self.verbose: print("s =", s_prime,"a =",action,"r =",r)
         # update Q table
-        self.Q[self.s][self.a] = (1 - self.alpha) * self.Q[self.s][self.a] +  self.alpha * (r + self.alpha * self.Q[self.s][self.Q[s_prime].argmax()])
-        # self.Q[self.s, self.a] = (1 - self.alpha) * (self.Q[self.s, self.a]) + self.alpha * (r + self.gamma * self.Q[s_prime,np.argmax(self.Q[s_prime,:])])
+        self.Q[self.s, self.a] = (1 - self.alpha) * self.Q[self.s, self.a] +  self.alpha * (r + self.gamma * self.Q[s_prime, self.Q[s_prime].argmax()])
         # update rar and state
         self.rar *= self.radr
         self.s = s_prime
