@@ -2,7 +2,7 @@
 dogImages/
 lfw/
 bottleneck_features/
-saved_models/weights.best.from_scratch.hdf5
-saved_models/weights.best.vgg16.hdf5
+saved_models/
+__pycache__/
 .ipynb_checkpoints/
 bottleneck_features/DogVGG16Data.npz
