@@ -32,4 +32,4 @@ Cuda compilation tools, release 9.0, V9.0.176
    >>> sess = tf.Session()
    >>> print(sess.run(hello))
 ```
-![TF Hello World](images\tf_hello_world.PNG)
+![TF Hello World](\images\tf_hello_world.PNG)
