@@ -11,7 +11,7 @@ CPU : Inter i7-6700K
 Memory : 16G
 GPU : Nvidia GeForce GTX 1070 8G
 ```
-根据Tensoflow官方给出的文档在本地搭建GPU的运行环境。首先下载并安装CUDA TookKit 9.0，然后下载对应版本的cuDNN 7.0，解压后根据官方提示将解压后的cuDNN的文件拷贝到指定目录中；NVIDIA环境的搭建的具体步骤参见 http://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/
+根据[Tensoflow官方](https://tensorflow.google.cn/)给出的文档在本地搭建GPU的运行环境。首先下载并安装CUDA TookKit 9.0，然后下载对应版本的cuDNN 7.0，解压后根据官方提示将解压后的cuDNN的文件拷贝到指定目录中；[NVIDIA环境的搭建的具体步骤](http://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/ "Markdown")。
 ```
 安装完成后可以通过命令：nvcc -V 来检查下是否安装成功，安装成功的话会输出以下命令
 nvcc: NVIDIA (R) Cuda compiler driver
