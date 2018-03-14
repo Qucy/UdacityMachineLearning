@@ -11,7 +11,16 @@ CPU : Inter i7-6700K
 Memory : 16G
 GPU : Nvidia GeForce GTX 1070 8G
 ```
-根据Tensoflow官方给出的文档在本地搭建GPU的运行环境，考虑到会使用jupyter notebook，所以选择用conda创建一个新的环境。
+根据Tensoflow官方给出的文档在本地搭建GPU的运行环境，考虑到会使用jupyter notebook，所以选择用conda创建一个新的环境。首先下载并安装CUDA TookKit 9.0，然后下载对应版本的cuDNN 7.0，解压后根据官方提示将对应的文件拷贝到指定目录中；NVIDIA环境的搭建的具体步骤参见 http://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/
 ```
-1
+安装完成后可以通过命令：nvcc -V 来检查下是否安装成功，安装成功的话会输出以下命令
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2017 NVIDIA Corporation
+Built on Fri_Sep__1_21:08:32_Central_Daylight_Time_2017
+Cuda compilation tools, release 9.0, V9.0.176
+```
+Nivida的环境安装完成后，继续安装Anaconda的环境，脚本在Tensorflow官方文档都已经详细给出
+```
+首先创建python的环境
+
 ```
