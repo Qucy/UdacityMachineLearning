@@ -10,7 +10,9 @@
 CPU : Inter i7-6700K
 Memory : 16G
 GPU : Nvidia GeForce GTX 1070 8G
+OS : Win 10 64bit
 ```
+
 根据[Tensoflow官方](https://tensorflow.google.cn/)给出的文档在本地搭建GPU的运行环境。首先下载并安装CUDA TookKit 9.0，然后下载对应版本的cuDNN 7.0，解压后根据官方提示将解压后的cuDNN的文件拷贝到指定目录中；[NVIDIA环境的搭建的具体步骤](http://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/ "Markdown")。
 ```
 安装完成后可以通过命令：nvcc -V 来检查下是否安装成功，安装成功的话会输出以下命令
@@ -19,6 +21,7 @@ Copyright (c) 2005-2017 NVIDIA Corporation
 Built on Fri_Sep__1_21:08:32_Central_Daylight_Time_2017
 Cuda compilation tools, release 9.0, V9.0.176
 ```
+
 考虑到会使用jupyter notebook，所以选择用Anaconda，再Nivida的环境安装完成后，继续安装Anaconda的环境，脚本在Tensorflow官方文档都已经详细给出
 ```
 1. 创建python的环境 
@@ -32,5 +35,7 @@ Cuda compilation tools, release 9.0, V9.0.176
    >>> sess = tf.Session()
    >>> print(sess.run(hello))
 ```
+
 运行之后如下图，成功的输出了 Hello，TensorFlow并且显示出了显卡的信息，说明GPU环境已经准备完毕
+
 ![TF Hello World](images/tf_hello_world.PNG)
