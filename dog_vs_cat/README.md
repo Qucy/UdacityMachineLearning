@@ -32,4 +32,5 @@ Cuda compilation tools, release 9.0, V9.0.176
    >>> sess = tf.Session()
    >>> print(sess.run(hello))
 ```
+运行之后的结果如下图，可以看到成功的输出了 Hello，TensorFlow并且显示出了加载显卡的信息，说明GPU环境已经准备完毕了
 ![TF Hello World](images/tf_hello_world.PNG)
