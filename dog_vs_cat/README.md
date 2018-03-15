@@ -13,7 +13,7 @@ GPU : Nvidia GeForce GTX 1070 8G
 OS : Win 10 64bit
 ```
 
-根据[Tensorflow官方](https://tensorflow.google.cn/)给出的文档在本地搭建GPU的运行环境。首先下载并安装CUDA TookKit 9.0，然后下载对应版本的cuDNN 7.0，解压后根据[NVIDIA官方说明](http://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/ "Markdown")将解压后的cuDNN的文件拷贝到指定目录中。注意，这里CUDA和cuDNN的版本一定要按照官方要求来按照！！
+根据[Tensorflow官方](https://tensorflow.google.cn/)给出的文档在本地搭建GPU的运行环境。首先下载并安装CUDA TookKit 9.0，然后下载对应版本的cuDNN 7.0。根据[NVIDIA官方说明](http://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/ "Markdown")将解压后的cuDNN的文件拷贝到指定目录中。注意，这里CUDA和cuDNN的版本一定要和官方要求的一致！！
 
 ```
 安装完成后可以通过命令：nvcc -V 来检查下是否安装成功，安装成功的话会输出以下命令
@@ -67,3 +67,14 @@ move dog* dog\
 
 # 模型选择
 
+Capstone中给出了以下几个模型
+
+* [LeNet](http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf) 1998
+* [AlexNet](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf) 12
+* [VGGNet](https://arxiv.org/abs/1409.1556) 14.09
+* [GoogLeNet](https://arxiv.org/abs/1409.4842) 14.09
+* [ResNet](https://arxiv.org/abs/1512.03385) 15.12
+* [Inception v3](https://arxiv.org/abs/1512.00567) 15.12
+* [Inception v4](https://arxiv.org/abs/1602.07261) 16.02
+* [Xception](https://arxiv.org/abs/1610.02357) 16.10
+* [ResNeXt](https://arxiv.org/abs/1611.05431) 16.11
