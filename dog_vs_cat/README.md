@@ -44,10 +44,9 @@ Cuda compilation tools, release 9.0, V9.0.176
 当然考虑到我们需要读取图片，构建CNN，操作矩阵等等。因此还需要安装一些额外的工具包。
 
 ```
-conda install opencv 图片处理
-conda install keras  CNN构建
-conda install numpy  矩阵，数组
-conda install matplot 画图？
+conda install jupyter notebook 
+conda install opencv
+conda install keras
 ```
 
 至此环境准备完毕
