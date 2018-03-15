@@ -55,7 +55,15 @@ conda install matplot 画图？
 
 # 数据准备
 
-解压后训练集一共有25000张猫和狗的图片，测试集一共12500张猫和狗的图片。猫的图片：cat.0.jpg-cat.12499.jpg，狗的图片：dog.0.jpg-dog.12499.jpg。测试集：1.jpg-12500.jpg。因为会用到Keras的ImageDataGenerator，这里需要对训练集的数据做些简单预处理。因为是在windows环境，简单粗暴的直接在train下面创建2个文件夹dog和cat，然后直接将dog和cat图片剪切到对应的文件夹中。
+解压后训练集一共有25000张猫和狗的图片，测试集一共12500张猫和狗的图片。猫的图片：cat.0.jpg-cat.12499.jpg，狗的图片：dog.0.jpg-dog.12499.jpg。测试集：1.jpg-12500.jpg。因为会用到Keras的ImageDataGenerator，这里需要对训练集的数据做些简单预处理。因为是在windows环境，可以使用windows的bash脚本来进行操作。
+
+```
+首先运行CMD，然后cd到train文件夹中,然后依次执行以下脚本
+md cat
+md dog
+move cat* cat\
+move dog* dog\
+```
 
 # 模型选择
 
