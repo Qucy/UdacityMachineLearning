@@ -78,3 +78,10 @@ Capstone中给出了以下几个模型
 * [Inception v4](https://arxiv.org/abs/1602.07261) 16.02
 * [Xception](https://arxiv.org/abs/1610.02357) 16.10
 * [ResNeXt](https://arxiv.org/abs/1611.05431) 16.11
+
+打算选择4个模型分别为 VGGNet，ResNet，Inception v3，Xception，而且这4个模型Keras都已全部集成进来了。没直接看论文，看下其他人的介绍[ImageNet: VGGNet, ResNet, Inception, and Xception with Keras](https://www.pyimagesearch.com/2017/03/20/imagenet-vggnet-resnet-inception-xception-keras/)感觉写的也挺不错的，我来稍微做个总结：
+- VGGNet，模型比较简单，只用了3x3的conv filter，max-pooling，2层全连接层(每层4096个nodes)及最后的argmax层。VGGNet主要有2个缺点，一个训练起来很慢，非常耗时。另外一个是模型weights很多，导致模型很大，训练时也会占用更多的磁盘和带宽。VGG16大约533MB，VGG19大约574MB。VGG相对下面几个网络来说已经用的比较少了。
+- ResNet，也叫残差网络，诞生于一个美丽而简单的观察：为什么非常深度的网络在增加更多层时会表现得更差？作者将这些问题归结成了一个单一的假设：直接映射是难以学习的。而且他们提出了一种修正方法：不再学习从 x 到 H(x) 的基本映射关系，而是学习这两者之间的差异，也就是「残差（residual）」,假设残差为 F(x)=H(x)-x，那么现在我们的网络不会直接学习 H(x) 了，而是学习 F(x)+x。这就带来了你可能已经见过的著名 ResNet（残差网络）模块。ResNet由多个残差模块组成，结果是好得出奇。ResNet的模型比VGG小许多，大概只有100MB左右。
+- Inception，是GoogleNet的改版，V3，V4是Google后来起的不同的版本名称。这个网络的特点在课程中有介绍。即在同一层同时采用3x3的Filter，1x1的Filter以及5x5的Filter，最后将这些不同Filter的结果组装，传输至下一层。如果说ResNet“深不见底”，那么Inception就是“宽大无比”！Inception的模型比VGGNet和ResNet都要小，大概只有96MB。
+- Xception，Xception的意思是extreme inception，而且正如其名字表达的那样，它将 Inception 的原理推向了极致。它的假设是：「跨通道的相关性和空间相关性是完全可分离的，最好不要联合映射它们。」Xception 的作者也是 Keras 的作者。Francois Chollet 是真正的大神 ：）
+https://www.jiqizhixin.com/articles/2017-08-19-4
