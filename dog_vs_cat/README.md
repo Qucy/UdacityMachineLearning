@@ -47,6 +47,7 @@ Cuda compilation tools, release 9.0, V9.0.176
 conda install jupyter notebook 
 conda install opencv
 conda install keras
+conda install PIL
 ```
 
 至此环境准备完毕
