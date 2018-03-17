@@ -79,7 +79,7 @@ Capstone中给出了以下几个模型
 * [Xception](https://arxiv.org/abs/1610.02357) 16.10
 * [ResNeXt](https://arxiv.org/abs/1611.05431) 16.11
 
-打算选择4个模型分别为 VGGNet，ResNet，Inception v3，Xception，而且这4个模型Keras都已全部集成进来了。没直接看论文，看下其他人的介绍[ImageNet: VGGNet, ResNet, Inception, and Xception with Keras](https://www.pyimagesearch.com/2017/03/20/imagenet-vggnet-resnet-inception-xception-keras/)感觉写的也挺不错的，我来稍微做个总结：
+打算选择4个模型分别为 VGGNet，ResNet，Inception v3，Xception，而且这4个模型Keras都已全部集成了。没直接看论文，看下其他人的介绍[ImageNet: VGGNet, ResNet, Inception, and Xception with Keras](https://www.pyimagesearch.com/2017/03/20/imagenet-vggnet-resnet-inception-xception-keras/)感觉写的也挺不错的，我来稍微做个总结：
 
 - VGGNet，模型比较简单，只用多个了3x3的conv filter，max-pooling，2层全连接层(每层4096个nodes)及最后的argmax层。VGGNet主要有2个缺点，一个训练起来很慢，非常耗时。另外一个是模型weights很多，导致模型很大，训练时也会占用更多的磁盘和带宽。VGG16大约533MB，VGG19大约574MB。VGG相对下面几个网络来说已经用的比较少了。
 
@@ -95,4 +95,4 @@ Capstone中给出了以下几个模型
 
 # 训练模型
 
-选择了好模型，下面让我们开始训练模型！请移步[训练代码](dog_vs_cat.ipynb)来查看相关步骤及代码。
+选择了好模型并且大概的了解了下几个模型以及它们之间的区别，下面让我们开始训练模型！请移步[训练代码](dog_vs_cat.ipynb)来查看相关步骤及代码。
