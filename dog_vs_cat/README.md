@@ -41,13 +41,13 @@ Cuda compilation tools, release 9.0, V9.0.176
 
 ![TF Hello World](images/tf_hello_world.PNG)
 
-当然考虑到我们需要读取图片，构建CNN，操作矩阵等等。因此还需要安装一些额外的工具包。
+当然考虑到我们需要读取图片，构建CNN，操作矩阵等等。因此还需要安装一些额外的工具包。注意Keras最好使用pip的命令来安装，这里我踩了一个坑。用conda install keras后，自动给我安装了一个cpu版本的tensorflow从而覆盖掉了GPU版本的tensorflow。
 
 ```
-conda install jupyter notebook 
+pip install --ignore-installed --upgrade jupyter notebook
+pip install --ignore-installed --upgrade keras
+pip install --ignore-installed --upgrade pillow
 conda install opencv
-conda install keras
-conda install pillow
 ```
 
 至此环境准备完毕
