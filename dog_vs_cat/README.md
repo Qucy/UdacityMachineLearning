@@ -61,8 +61,8 @@ conda install pillow
 首先运行CMD，然后cd到train文件夹中,然后依次执行以下脚本
 md cat
 md dog
-move cat* cat\
-move dog* dog\
+move cat*jpg cat\
+move dog*jpg dog\
 ```
 
 # 模型选择
