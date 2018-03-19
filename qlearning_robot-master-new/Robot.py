@@ -14,7 +14,7 @@ class Robot(object):
         self.gamma = gamma
 
         self.epsilon0 = epsilon0
-        self.epsilon = epsilon0
+        self.epsilon = 0.99
         self.t = 0
 
         self.Qtable = {}
@@ -42,11 +42,10 @@ class Robot(object):
         """
         if self.testing:
             # TODO 1. No random choice when testing
-
-            pass
+            self.epsilon0 = 0
         else:
             # TODO 2. Update parameters when learning
-            pass
+            self.epsilon0 *= self.epsilon
 
         return self.epsilon
 
@@ -56,7 +55,7 @@ class Robot(object):
         """
 
         # TODO 3. Return robot's current state
-        return self.state
+        return self.maze.sense_robot()
 
     def create_Qtable_line(self, state):
         """
@@ -82,7 +81,7 @@ class Robot(object):
             # TODO 5. Return whether do random choice
             # hint: generate a random number, and compare
             # it with epsilon
-            return random.random() < self.epsilon
+            return random.random() < self.epsilon0
 
         if self.learning:
             if is_random_exploration():
@@ -90,10 +89,10 @@ class Robot(object):
                 return self.valid_actions[random.randint(0, len(self.valid_actions)-1)]
             else:
                 # TODO 7. Return action with highest q value
-                return self.get_max_reward(self.state)
+                return max(self.Qtable[self.state], key=lambda i: self.Qtable[self.state][i])
         elif self.testing:
             # TODO 7. choose action with highest q value
-            return self.get_max_reward(self.state)
+            return max(self.Qtable[self.state], key=lambda i: self.Qtable[self.state][i])
         else:
             # TODO 6. Return random choose aciton
             return self.valid_actions[random.randint(0, len(self.valid_actions)-1)]
@@ -105,7 +104,7 @@ class Robot(object):
         """
         if self.learning:
             # TODO 8. When learning, update the q table accroding to the given rules
-            self.Qtable[self.state][action] = (1 - self.alpha) * self.Qtable[self.state][action] + self.alpha * (r + self.gamma * self.get_max_reward(next_state))
+            self.Qtable[self.state][action] = (1 - self.alpha) * self.Qtable[self.state][action] + self.alpha * (r + self.gamma * self.get_max_q_value(next_state))
 
     def update(self):
         """
@@ -128,6 +127,5 @@ class Robot(object):
 
         return action, reward
 
-
-    def get_max_reward(self, state):
-        return max(self.Qtable[state], key=lambda i: self.Qtable[state][i])
+    def get_max_q_value(self, state):
+        return self.Qtable[state][max(self.Qtable[state], key=lambda i: self.Qtable[state][i])]
