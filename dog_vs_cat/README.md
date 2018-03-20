@@ -95,4 +95,12 @@ Capstone中给出了以下几个模型
 
 # 训练模型
 
-选择了好模型并且大概的了解了下几个模型以及它们之间的区别，下面让我们开始训练模型！请移步[训练代码](dog_vs_cat.ipynb)来查看相关步骤及代码。
+首先我们简单的尝试下这几个模型[初试模型](first_try_out_modules.ipynb)，根据对这几个模型的了解及初试，选择放弃VGG19这个模型。
+
+接下来我们需要对剩下的3个模型进行迁移学习，我们将会获取去掉top layer的module，然后加上我们自己的layer。
+
+Transfer learning ResNet
+
+Transfer learning Inception
+
+Transfer learning Xception
