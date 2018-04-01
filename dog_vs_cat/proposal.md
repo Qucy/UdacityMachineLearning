@@ -1,5 +1,5 @@
-# 项目背景
-本次我选择的项目为图片识别类型的项目dog_vs_cat。这个项目是Kaggle 2013年发起的一个竞赛项目，目前已经关闭。截止目前（2018-03-22）已经有1334竞赛者参加了这个项目。从2012年的AlexNet开始，CNN已经逐渐成为图片识别领域的佼佼者。在同样的ImageNet的数据集上人眼的识别率约为5.1%，而排名靠前的ResNet的准确率已经提升到了3.57，超过了人眼。所以dog_vs_cat这个项目是完全可以通过CNN来解决的。计划是做完所有毕业项目，因为这个项目排在第一个所以就选择它作为毕业项目。
+# Domain Background
+The capstone project i choose is a computer vision project dogs vs cats start at Kaggle in 2013. By the end 1314 teams joined this project. From 2012 convoluational neural network become the state-of-the-art in computer vision. CNN like VGG, ResNet and Inception are pretty good at classfiy and recognize the images, some are even better than human. Take ResNet for example the best ResNet's error on ImageNet data set is 3.57% while human's error is 5.1%. So the CNN can be a very good solution to this project. The reason why i choose this project is simply just this is the first project and i plan to finish every capstone project one by one.
 
 [Kaggle project dog_vs_cat](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition)
 [ResNet](https://arxiv.org/abs/1512.03385)
