@@ -1,5 +1,5 @@
 # Domain Background
-  The capstone project i choose is a computer vision project dogs vs cats start at Kaggle in 2013. By the end 1314 teams joined this project.
+  The capstone project i choose is a computer vision project dogs vs cats start at Kaggle in 2013. By the end 1314 teams joined this project and first place's score is 0.03302. For this project we need to reach top 10% at leaderborad which means need to score less than 0.06127.
   From 2012 convoluational neural network become the state-of-the-art in computer vision. CNN like VGG, ResNet and Inception are pretty good at classfiy and recognize the images, some are even better than human. Take ResNet for example the best ResNet's error on ImageNet datasets is 3.57% while human's error is 5.1%. So the CNN can be a very good solution to this project. The reason why i choose this project is simply just this is the first project and i plan to finish every capstone project one by one.
 
 [Kaggle project dog_vs_cat](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition)
@@ -13,6 +13,7 @@ This project need to classfiy the image and output whether this is a dog or a ca
 The datasets can be download from Kaggle's project dogs vs cats directly. There are 3 files need to be downloaded, train.zip contains 25000 images as our trainning data, test.zip contains 12500 images as our testing data, sample_submission.csv is a sample teach us how to submit our test result, we can generate our test reslut based on this file.
 
 [dog_vs_cat data](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data)
+[Oxford pet data](http://www.robots.ox.ac.uk/%7Evgg/data/pets/)
 
 
 # 解决办法
