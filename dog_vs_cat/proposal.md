@@ -33,6 +33,7 @@ As it is a binary classification problem with thoudsands of examples, i will use
 - accuracy: the proportion of correct label we made on our traning dataset. Ideally it should be 100%.(n means the number of samples, yi means the value predict by model, yi hat means the ground truth value, I equal to 1 when yi equals to yi hat otherwise I equal to 0)
 ![Accuracy](images/accuracy.PNG)
 - time: the time that the algorithm takes to do classification, a good algorithm should predict fast as end user can't wait for a long time
+
 Above all a well performance model should have high accuracy and a reasonable running time.
 
 
