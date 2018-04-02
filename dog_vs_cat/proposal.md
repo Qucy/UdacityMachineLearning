@@ -1,8 +1,13 @@
 # Domain Background
-  The capstone project i choose is a computer vision project dogs vs cats start at Kaggle in 2013. By the end 1314 teams joined this project. The project is evaluate by log loss on the test datasets which means the lowest score is the best. And we need to reach top 10% at leaderborad which means need to score less than 0.06127. The project it's regarding compture vision, from 2012 convoluational neural network become the state-of-the-art in computer vision. CNN like VGG, ResNet and Inception are pretty good at classfiy and recognize the images, some are even better than human. Take ResNet for example the best ResNet's error on ImageNet datasets is 3.57% while human's error is 5.1%. So the CNN can be a perfect solution for this project. The reason why i choose this project is simply just this is the first project and i plan to finish every capstone project one by one.
+Image recognition or image classification is a problem in vision science as well as in computer science. The task is to assign a image to one or more classes. This may be done by manually or algorithmically and the images to be classfied may have different ojbect in it, different size and different color. Images may classified according to edges,corners, blobs and ridge.(1)
+
+This project will focus on algorithmically method, excatly machine learning algorithms which are widely used in image recognition and image classification. There are many classification algortihms such as Decision Tree, KNN, Naives Bayes and Neural Network.
+
+From 2012 convoluational neural network become the state-of-the-art in computer vision. CNN like VGG, ResNet and Inception are pretty good at classfiy and recognize the images, some are even better than human. Take ResNet for example the best ResNet's error on ImageNet datasets is 3.57% while human's error is 5.1%. So the CNN can be a perfect solution for this project. The reason why i choose this project is simply just this is the first project and i plan to finish every capstone project one by one.
 
 [Kaggle project dog_vs_cat](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition)
 [ResNet](https://arxiv.org/abs/1512.03385)
+
 
 
 # Problem Statement
@@ -33,3 +38,6 @@ Student summarizes a theoretical workflow for approaching a solution given the p
 
 Presentation
 Proposal follows a well-organized structure and would be readily understood by its intended audience. Each section is written in a clear, concise and specific manner. Few grammatical and spelling mistakes are present. All resources used and referenced are properly cited.
+
+
+[(1)](https://en.wikipedia.org/wiki/Feature_detection_(computer_vision))
