@@ -30,7 +30,10 @@ The benchmark model
 
 
 # Evaluation Metrics
-
+As it is a binary classification problem with thoudsands of examples, i will use two metrics here: accuracy and running time.
+- accuracy: the proportion of correct label we made on our traning dataset. Ideally it should be 100%.
+$$\textrm{accuracy} = \frac{1}{n} \sum_{i=1}^n \left[ y_i==\hat{y}_i]$$
+- time:
 
 
 # Project Design
