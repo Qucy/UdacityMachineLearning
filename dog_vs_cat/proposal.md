@@ -42,12 +42,21 @@ Above all a well performance model should have high accuracy and a reasonable ru
 
 
 (1) Computer vision: https://en.wikipedia.org/wiki/Feature_detection_(computer_vision)
+
 (2) Convolutinal neural network: https://en.wikipedia.org/wiki/Convolutional_neural_network
+
 (3) Kaggle Dogs vs Cats: https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition
+
 (4) TensorFlow: https://tensorflow.google.cn/
+
 (5) Keras: https://keras.io/
+
 (6) Keras Applications: https://keras.io/applications/
+
 (7) Dogs vs Cats Datasets: https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data
+
 (8) Oxford Pet Datasets: http://www.robots.ox.ac.uk/%7Evgg/data/pets/
+
 (9) Keras ImageDataGenerator: https://keras.io/preprocessing/image/
+
 (10) Kaggle Winner Interview: http://blog.kaggle.com/2017/04/03/dogs-vs-cats-redux-playground-competition-winners-interview-bojan-tunguz/
