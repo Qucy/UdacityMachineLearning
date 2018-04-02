@@ -1,43 +1,50 @@
 # Domain Background
-Image recognition or image classification is a problem in vision science as well as in computer science. The task is to assign a image to one or more classes. This may be done by manually or algorithmically and the images to be classfied may have different ojbect in it, different size and different color. Images may classified according to edges,corners, blobs and ridge.(1)
+Image recognition or image classification is a problem in vision science as well as in computer science. The task is to assign a image to one or more classes. This may be done by manually or algorithmically and the images to be classfied may have different ojbect in it, different size and different color. Images may classified according to edges,corners, blobs and ridge(1).
 
-This project will focus on algorithmically method, excatly machine learning algorithms which are widely used in image recognition and image classification. There are many classification algortihms such as Decision Tree, KNN, Naives Bayes and Neural Network.
+This project will focus on algorithmically method, excatly machine learning algorithms which are widely used in image recognition and image classification. There are many classification algortihms such as Decision Tree, KNN, Naives Bayes and Neural Network, each of these models have their own advantages and disadvantages. The algortihm i will use is convolutional neural network(CNN or ConvNet). It is a deep, feed-forward artifical neural network that has successfully been applied to analyzing visual imagery(2).
 
-From 2012 convoluational neural network become the state-of-the-art in computer vision. CNN like VGG, ResNet and Inception are pretty good at classfiy and recognize the images, some are even better than human. Take ResNet for example the best ResNet's error on ImageNet datasets is 3.57% while human's error is 5.1%. So the CNN can be a perfect solution for this project. The reason why i choose this project is simply just this is the first project and i plan to finish every capstone project one by one.
-
-[Kaggle project dog_vs_cat](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition)
-[ResNet](https://arxiv.org/abs/1512.03385)
-
+There are many public images online for classification, here, i will apply classification algorithms on a Kaggle project dogs vs cats(3), which contains 25000 images in train set and 12500 images in test set. The image will be classified according to their contents.
 
 
 # Problem Statement
-This project need to classfiy the image and output whether image is a dog or a cat. Hence this is a binary classfication problem in supervised learning and also belong to computer vision domain. It can be sloved by using transfer learning from highly mature CNN models like ResNet, Xception, Inception base on our own datasets.
+The classification of dogs vs cats is a supervised classification problem, there are 2 categories, each of the image is only belong to one category, the goal is to use transfer learning from highly matured CNNs to build our model to assign each image to the correct category.
+
+I will download highly matured CNN models without top layer and use these downloaded models to extract bottleneck features based on train set and test set. And save these bottleneck features as numpy array on local disk for saving time. Based on these features i will build my own CNN models and train my models. Finally i will validate the performance on my own models.
+
+In this project i will use TensorFlow(4) as backend and Keras(5) as high level API to build CNN. To save time i will choose VGG16, VGG9, ResNet, InceptionV3, Xception as base CNN models because these models are all embed in Keras Application API(6).
+
 
 # Datasets and Inputs
-The datasets can be downloaded from Kaggle's project dogs vs cats directly. There are 3 files need to be downloaded, train.zip contains 25000 images as our trainning data, test.zip contains 12500 images as our testing data, sample_submission.csv is a sample teach us how to submit our test result, we can generate our test reslut based on this file.
+The datasets can be downloaded from Kaggle directly(7). The train set contains 2 categories images, 12500 images for dog and 12500 images for cat. But test set don't provide any category, i only can use it when i want to generate a submission file based on our prediction via test set. Which means i only can know test result after submission. Hence i use another datasets, Oxford Pet datasets(8) as testing datasets which can run test locally. The Oxford Pet datasets contains 7390 images in total, 2400 images for cats, 4990 images for dogs.
 
-[dog_vs_cat data](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data)
-[Oxford pet data](http://www.robots.ox.ac.uk/%7Evgg/data/pets/)
+As i will use Keras as high level API it is a good practice to use Keras image preprocceing APIs like ImageDataGenerator(9) to generate batches of tensor images. First, i need to split train data into 2 sub-folders, test data into 1 sub-folder and Oxford Pet datasets also into 2 sub-folders. Then feed these images to ImageDataGenerator by folder path to get tensor images as our input tensor to CNNs.
 
 
 # Solution Statement
-The solution for this project would be using transfer learning based on CNN like VGG, ResNet, Xception, Inception. The project will use Keras as high level API and Tensorflow as backend. First, the project will download these CNN models without the last layer. Second, the project will extract bottleneck features based on these downloaded models via it's own datasets. Third, construct it's own model only contain last dense layer to do classification. The last step is to use one or more bottleneck features to train our own model.
 
-Benchmark Model
-A benchmark model is provided that relates to the domain, problem statement, and intended solution. Ideally, the student's benchmark model provides context for existing methods or known information in the domain and problem given, which can then be objectively compared to the student's solution. The benchmark model is clearly defined and measurable.
+
+
 
 # Benchmark Model
 The benchmark model 
 
 
-Evaluation Metrics
-Student proposes at least one evaluation metric that can be used to quantify the performance of both the benchmark model and the solution model presented. The evaluation metric(s) proposed are appropriate given the context of the data, the problem statement, and the intended solution.
+# Evaluation Metrics
 
-Project Design
-Student summarizes a theoretical workflow for approaching a solution given the problem. Discussion is made as to what strategies may be employed, what analysis of the data might be required, or which algorithms will be considered. The workflow and discussion provided align with the qualities of the project. Small visualizations, pseudocode, or diagrams are encouraged but not required.
 
-Presentation
-Proposal follows a well-organized structure and would be readily understood by its intended audience. Each section is written in a clear, concise and specific manner. Few grammatical and spelling mistakes are present. All resources used and referenced are properly cited.
+
+# Project Design
+
+
+
 
 
 [(1)](https://en.wikipedia.org/wiki/Feature_detection_(computer_vision))
+[(2)](https://en.wikipedia.org/wiki/Convolutional_neural_network)
+[(3)](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition)
+[(4)](https://tensorflow.google.cn/)
+[(5)](https://keras.io/)
+[(6)](https://keras.io/applications/)
+[(7)](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data)
+[(8)](http://www.robots.ox.ac.uk/%7Evgg/data/pets/)
+[(9)](https://keras.io/preprocessing/image/)
