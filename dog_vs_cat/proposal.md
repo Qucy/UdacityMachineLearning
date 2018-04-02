@@ -31,6 +31,7 @@ The benchmark model i will use is VGG16. I will compare our models to VGG16.
 # Evaluation Metrics
 As it is a binary classification problem with thoudsands of examples, i will use two metrics here: accuracy and running time.
 - accuracy: the proportion of correct label we made on our traning dataset. Ideally it should be 100%.
+![Accuracy](images\accuracy.PNG)
 - time: the time that the algorithm takes to do classification, a good algorithm should predict fast as end user can't wait for a long time
 Above all a well performance model should have high accuracy and a reasonable running time.
 
