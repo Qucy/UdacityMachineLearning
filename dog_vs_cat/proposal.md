@@ -25,7 +25,10 @@ As we build our model based on bottleneck features extrac from VGG, ResNet, Xcep
 
 
 # Benchmark Model
-The benchmark model i will use is VGG16. I will compare our models to VGG16.
+As i mentioned there are 2 solutions, i would like to use first solution to generate benchmark models to compare with second solution. According to the Kaggle winner interview the second solution is slightly better than the first one. Here i will consider two factors:
+- bias: the ideal model should assign each testing images to correct category, i suppose the second solution accuracy is a litte higher than the first one
+- variance: the model performance should not change a lot on different dataset, we need to avoid overfitting. The difference between train and test set should not exceed 5%.
+- time: the second solution should take more time as it rely on more models than the first solution
 
 
 # Evaluation Metrics
