@@ -41,8 +41,9 @@ Above all a well performance model should have high accuracy and a reasonable ru
 
 
 # Project Design
+The high level architecture design is as below, the first solution will simply transfer learning from only one model and integrate with our own model. The second solution will combine all the bottleneck features and then integrate with our own model. Our model will only contains two layers, BacthNormailization layer for preventing overfitting and a desen layer do classification. However this is only a proposed architecture the detail may still be changed during development and tuning if needed.
 
-
+![Architecture](images/CNN_Design.PNG)
 
 
 # References
