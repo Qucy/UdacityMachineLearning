@@ -91,16 +91,3 @@ Capstone中给出了以下几个模型
 
 - Xception，Xception的意思是extreme inception，而且正如其名字表达的那样，它将 Inception 的原理推向了极致。它的假设是：「跨通道的相关性和空间相关性是完全可分离的，最好不要联合映射它们。」Xception 的作者也是 Keras 的作者。Francois Chollet 是真正的大神 ：）
 ![xception](images/xception.png)
-
-
-# 训练模型
-
-首先我们简单的尝试下这几个模型[初试模型](first_try_out_modules.ipynb)，根据对这几个模型的了解及初试，选择放弃VGG19这个模型。
-
-接下来我们需要对剩下的3个模型进行迁移学习，我们将会获取去掉top layer的module，然后加上我们自己的layer。
-
-Transfer learning ResNet
-
-Transfer learning Inception
-
-Transfer learning Xception
