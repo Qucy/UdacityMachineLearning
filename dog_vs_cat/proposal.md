@@ -21,7 +21,7 @@ As i will use Keras as high level API it is a good practice to use Keras image p
 
 
 # Solution Statement
-As we build our model based on bottleneck features extrac from VGG, ResNet, Xception and Inception. We can simply build our own model just contain several simple layers to do classification. Then we use input tensor generate by Keras to train our model. There are 2 solutions, first is only use one model's bottleneck features to train our model. Second is combine all the models' bottleneck features to train our model and even we integrate with other learning algorithm. According to Kaggle winner interview(10) the second solution will be better than the first one. I will try both solutions in this project.
+As we build our model based on bottleneck features extrac from VGG, ResNet, Xception and Inception. We can simply build our own model just contain several simple layers to do classification. Then we use input tensor generate by Keras to train our model. There are 2 solutions, first is only use one model's bottleneck features to train our model. Second is combine all the models' bottleneck features to train our model and even can integrate with other learning algorithm. According to Kaggle winner interview(10) the second solution will be better than the first one. I will try both solutions in this project.
 
 
 # Benchmark Model
