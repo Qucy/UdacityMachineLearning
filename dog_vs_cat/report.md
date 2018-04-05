@@ -17,13 +17,13 @@ TODO
 项目的数据集能直接从Kaggle[10]上下载。Kaggle一共提供了3个文件，train.zip是训练集，test.zip是测试集以及一个csv格式的submission文件。训练集包含了2个类别的图片，猫和狗的图片各12500张。测试集包含了12500图片。训练集下数据的根据其文件名提供了标签，文件名的格式是{类别}.{序号}.jpg，比如猫的图片名称为cat.1.jpg，狗的图片名称为dog.1.jpg。因此我们可以根据文件，将其进行分类。而测试集的数据中并没有提供标签，文件名的格式是{序号}.jpg，比如1.jpg或2.jpg。同时数据集中的图片大小都是不一致的，我们需要在后续的步骤中处理这个问题。
 
 训练集中猫的图片
-![train set cat](images\train_set_cat.PNG)
+![train set cat](images/train_set_cat.PNG)
 
 训练集中狗的图片
-![train set cat](images\train_set_dog.PNG)
+![train set cat](images/train_set_dog.PNG)
 
 测试集中的图片
-![train set cat](images\test_set.PNG)
+![train set cat](images/test_set.PNG)
 
 '''
 在这一部分，你需要探索你将要使用的数据。数据可以是若干个数据集，或者输入数据/文件，甚至可以是一个设定环境。你需要详尽地描述数据的类型。如果可以的话，你需要展示数据的一些统计量和基本信息（例如输入的特征（features)，输入里与定义相关的特性，或者环境的描述）。你还要说明数据中的任何需要被关注的异常或有趣的性质（例如需要做变换的特征，离群值等等）。你需要考虑：
