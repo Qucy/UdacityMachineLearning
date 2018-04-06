@@ -63,23 +63,23 @@ TODO 可视化深度特征
 
 基于VGG19的深度特征，训练了200代，一共耗时171.04秒，训练集的最高准确率可以到达0.9908，验证集的最高准确率可以到达0.9754。训练集的最低loss为0.0298，测试集的最低loss为0.0601。
 
-![VGG19 plot](images/vgg19_plot.PNG))
+![VGG19 plot](images/vgg19_plot.PNG)
 
 基于ResNet50的深度特征，训练了50代，训练一共耗时46.07秒，训练集的最高准确率可以到达0.9948，验证集的最高准确率可以到达0.9838。训练集的最低loss为0.0181，测试集的最低loss为0.0453。
 
-![ResNet50 plot](images/resnet50_plot.PNG))
+![ResNet50 plot](images/resnet50_plot.PNG)
 
 基于InceptionV3的深度特征，训练了20代，训练一共耗时20.74秒，训练集的最高准确率可以到达0.9932，验证集的最高准确率可以到达0.9930。训练集的最低loss为0.0232，测试集的最低loss为0.0266。
 
-![InceptionV3 plot](images/inceptionv3_plot.PNG))
+![InceptionV3 plot](images/inceptionv3_plot.PNG)
 
 基于Xception的深度特征，训练了20代，训练一共耗时23.11秒，训练集的最高准确率可以到达0.9946，验证集的最高准确率可以到达0.9932。训练集的最低loss为0.0200，测试集的最低loss为0.0253。
 
-![Xception plot](images/xception_plot.PNG))
+![Xception plot](images/xception_plot.PNG)
 
 基于所有模型的深度特征，训练了50代，训练一共耗时67.65秒，训练集的最高准确率可以到达0.9954，验证集的最高准确率可以到达0.9940。训练集的最低loss为0.0162，测试集的最低loss为0.0203。
 
-![all model plot](images/all_model_features_plot.PNG))
+![all model plot](images/all_model_features_plot.PNG)
 
 
 - 模型评估
