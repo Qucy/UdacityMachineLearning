@@ -28,7 +28,7 @@ TODO
 ![train set cat](images/test_set.PNG)
 
 ### 算法和技术
-项目我使用了VGG[4]，ResNet[5]，InceptionV3[6]，Xception[7]作为项目的基础模型，这些基础模型的概览如下：
+项目使用VGG[4]，ResNet[5]，InceptionV3[6]，Xception[7]作为项目的基础模型，这些基础模型的概览如下：
 
 - VGG: VGG网络架构最早由Simonyan和Zisserman在2014年提出，VGG网络架构比较简单，遵循基本卷积网络的原型布局，一系列卷积层、最大池化层和激活层，最后还有一些全连接的分类层。如下图是VGG的一个架构图：
 ![VGG Net](images/imagenet_vgg16.png)
@@ -48,7 +48,7 @@ TODO
 - Xception：Xception的意思是extreme inception，而且正如其名字表达的那样，它将 Inception 的原理推向了极致。它的假设是：「跨通道的相关性和空间相关性是完全可分离的，最好不要联合映射它们。」Xception 不再只是将输入数据分割成几个压缩的数据块，而是为每个输出通道单独映射空间相关性，然后再执行 1×1 的深度方面的卷积来获取跨通道的相关性，如下图。Xception的模型最小大概只有89MB。 
 ![xception](images/xception.png)
 
-项目中使用谷歌的TensorFlow[8]作为神经网络的平台，使用Keras[9]的API来构建并训练CNN。同时以上模型在Kearas的Application API[10]中已经全部集成了。项目中我会基于上面的模型来进行迁移学习，从而构建一个简单自定义的模型，来预测并且在最后进行评估。
+项目中使用谷歌的TensorFlow[8]作为神经网络的平台，使用Keras[9]的API来构建并训练CNN。同时以上基础模型在Kearas的Application API[10]中已经全部集成了。项目中我会基于这些的模型来进行迁移学习，从而构建一个简单自定义的模型，来预测并且在最后进行评估。
 
 ### 探索性可视化
 TODO 可视化深度特征
