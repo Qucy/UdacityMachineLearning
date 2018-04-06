@@ -86,7 +86,7 @@ TODO 可视化深度特征
 
 3) 模型评估，基于测试集，依次用以上模型做了预测之后，将结果按照Kaggle的格式要求生成一份csv文件，将文件提交至Kaggle后，得到以下评估结果（如下图）。其中表现最好的是方案2，采用所有模型的特征并进行迁移学习的自定义模型，表现最差的是仅仅对VGG16单个模型进行迁移学的自定义模型。
 
-   ![predictions](images/predictions.PNG)
+   ![predictions](images/predictions.png)
 
 
 ### 完善
