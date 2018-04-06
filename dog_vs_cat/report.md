@@ -28,10 +28,11 @@ TODO
 ![train set cat](images/test_set.PNG)
 
 ### 算法和技术
-项目中使用谷歌的TensorFlow[4]作为神经网络的平台，使用Keras[5]的API来构建并训练CNN。使用VGG[6]，ResNet[7]，InceptionV3[8]，Xception[9]作为项目的基础模型，这些基础模型得特征如下：
+项目我使用了VGG[4]，ResNet[5]，InceptionV3[6]，Xception[7]作为项目的基础模型，这些基础模型的概览如下：
 
 - VGG: VGG网络架构最早由Simonyan和Zisserman在2014年提出，VGG网络架构比较简单，遵循基本卷积网络的原型布局，一系列卷积层、最大池化层和激活层，最后还有一些全连接的分类层。如下图是VGG的一个架构图：
 ![VGG Net](images/imagenet_vgg16.png)
+
 而VGG16和VGG19中的16和19分别代表了权重的层数，如下图的D列及E列。VGGNet主要有2个缺点，一个训练起来很慢，非常耗时。另外一个是模型weights很多，导致模型很大，训练时也会占用更多的磁盘和带宽。VGG16大约533MB，VGG19大约574MB。
 ![VGG Net](images/imagenet_vggnet_table.png)
 
@@ -40,12 +41,14 @@ TODO
 
 - Inception：第一版叫做GoogleNet，V3，V4是Google后来起的不同的版本名称。这个网络的特点在同一层同时采用3x3，1x1，5x5的Filter及一个3x3的max pooling来提取多个特征，再将这些不同特征组装。如下图：
 ![Inception module](images/Inception_module.png)
+
 如果ResNet是为了更深，那么 Inception 家族就是为了更宽。这种模型架构的信息密度更大了，这就带来了一个突出的问题：计算成本大大增加。所以作者使用 1×1 卷积来执行降维，一个 1×1 卷积一次仅查看一个值，但在多个通道上，它可以提取空间信息并将其压缩到更低的维度，如下图。Inception的模型比VGGNet和ResNet都要小，大概只有96MB。 
 ![Inception module](images/Inception_module_1.png)
 
 - Xception：Xception的意思是extreme inception，而且正如其名字表达的那样，它将 Inception 的原理推向了极致。它的假设是：「跨通道的相关性和空间相关性是完全可分离的，最好不要联合映射它们。」Xception 不再只是将输入数据分割成几个压缩的数据块，而是为每个输出通道单独映射空间相关性，然后再执行 1×1 的深度方面的卷积来获取跨通道的相关性，如下图。Xception的模型最小大概只有89MB。 
 ![xception](images/xception.png)
 
+项目中使用谷歌的TensorFlow[8]作为神经网络的平台，使用Keras[9]的API来构建并训练CNN。同时以上模型在Kearas的Application API[10]中已经全部集成了。项目中我会基于上面的模型来进行迁移学习，从而构建一个简单自定义的模型，来预测并且在最后进行评估。
 
 ### 探索性可视化
 TODO 可视化深度特征
@@ -60,11 +63,11 @@ TODO 可视化深度特征
 项目中使用Keras的图片预处理API ImageDataGenerator[11]中的方法flow_from_directory加载数据集。首先需要将训练集划分到2个子文件夹中，猫的图片放入cat的文件夹中，狗的图片放入dog文件夹中，测试集全部划分到1个子文件夹中。然后用flow_from_directory的参数target size来调整图片的大小，因为不同的CNN需要的输入的图片大小会有所区别，比如VGG和ResNet要求的图片大小为（224,224）而Xception和Inception需要的图片大小为（299,299）。再使用flow_from_directory读取图片后，调用model的方法predict_generator来进行预测。因为模型是没有包含toplayer的，所以得到会是所有训练集基于当前模型的一个深度特征。为了方便调试，这里把深度特征作为数组以文件的方式保存在本地。
 
 因为使用了深度特征，所以项目的自定义模型不需要太复杂。自定义模型一共只包含了2层，第一层为BatcNormalization层，目的是为了防止过拟合。第二层为Dense层，激活函数为sigmod，目的是为了做最后的分类。构建完模型后，还需要调用model的compile方法来编译模型。编译模型时，我传递了3个参数，
-- 第一个是optimizer代表的是优化器，项目中使用的是Adam[?],这是一款常见的优化器，特点是计算效率较高，对内存要求比较少，默认参数的超参数大多数情况下基本够用了。
+- 第一个是optimizer代表的是优化器，项目中使用的是Adam[12],这是一款常见的优化器，特点是计算效率较高，对内存要求比较少，默认参数的超参数大多数情况下基本够用了。
 - 第二个是loss代表的是损失函数，因为是二分类我使用的是binary_crossentropy。
 - 第三个是metrics代表的是衡量指标，这里可以传递的是数组，可以有1个或多个指标，我使用的是['accuracy']。
 
-模型编译完成后就可以开始训练模型，这里不需手动将训练集划分为训练数据和验证数据，Keras的ModelAPI[12]提供一个训练模型的方法fit。而fit中提供了一个参数validation_split可以自动帮助我们来划分训练数据和验证数据。比如validation_split = 0.2时，代表80%的数据用于训练，而剩下20%数据用于验证。最后当模型训练完成后，使用测试集的深度特征作为输入，利用model的predict方法来进行预测。将最终结果写入到需要提交的csv文件当中，提交至Kaggle。
+模型编译完成后就可以开始训练模型，这里不需手动将训练集划分为训练数据和验证数据，Keras的ModelAPI[13]提供一个训练模型的方法fit。而fit中提供了一个参数validation_split可以自动帮助我们来划分训练数据和验证数据。比如validation_split = 0.2时，代表80%的数据用于训练，而剩下20%数据用于验证。最后当模型训练完成后，使用测试集的深度特征作为输入，利用model的predict方法来进行预测。将最终结果写入到需要提交的csv文件当中，提交至Kaggle。
 
 
 - 深度特征导出，项目里基于当前的训练集和测试集一共导出了5个模型的深度特征,每个文件都包括了训练集和测试集深度特征，详情如下：
@@ -170,26 +173,26 @@ _（大概 1-2 页）_
 
 [2] Kaggle Project Dogs vs Cats:www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition
 
-[3] TensorFlowofficial site:tensorflow.google.cn
+[3] Dogs vs Cats Datasets: www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data
 
-[4] Kerasofficial site:keras.io
+[4] Karen Simonyan, Andrew Zisserman. Very Deep Convolutional Networks for Large-Scale Image Recognition. arXiv:1409.1556, 2014
 
-[5] Karen Simonyan, Andrew Zisserman. Very Deep Convolutional Networks for Large-Scale Image Recognition. arXiv:1409.1556, 2014
+[5] Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun. Deep Residual Learning for Image Recognition. arXiv:1512.03385, 2015
 
-[6] Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun. Deep Residual Learning for Image Recognition. arXiv:1512.03385, 2015
+[6] Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe, Jonathon Shlens, Zbigniew Wojna. Rethinking the Inception Architecture for Computer Vision. arXiv:1512.00567, 2015
 
-[7] Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe, Jonathon Shlens, Zbigniew Wojna. Rethinking the Inception Architecture for Computer Vision. arXiv:1512.00567, 2015
+[7] François Chollet. Xception: Deep Learning with Depthwise Separable Convolutions. arXiv:1610.02357, 2016
 
-[8] François Chollet. Xception: Deep Learning with Depthwise Separable Convolutions. arXiv:1610.02357, 2016
+[9] TensorFlowofficial site:tensorflow.google.cn
 
-[9] Keras applicationsintroduction:keras.io/applications/
+[9] Kerasofficial site:keras.io
 
-[10] Dogs vs Cats Datasets: www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data
+[10] Keras applicationsintroduction:keras.io/applications/
 
 [11] Keras ImageDataGenerator introduction:keras.io/preprocessing/image/
 
-[] Diederik Kingma, Jimmy Ba. Adam: A Method for Stochastic Optimization. arXiv:1412.6980, 2014
+[12] Diederik Kingma, Jimmy Ba. Adam: A Method for Stochastic Optimization. arXiv:1412.6980, 2014
 
-[12] Keras model API introduction: keras.io/models/model/
+[13] Keras model API introduction: keras.io/models/model/
 
-[13] Kaggle Team, Dogs vs. Cats Redux Playground Competition, Winner's Interview
+[14] Kaggle Team, Dogs vs. Cats Redux Playground Competition, Winner's Interview
