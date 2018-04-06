@@ -1,3 +1,6 @@
+# 猫狗分类项目报告
+
+## 定义
 ### 项目概述
 图像识别或图像分类是属于视觉科学和电脑科学领域的一个问题。这类问题的目的是需要将图片分类至一个或多个类别当中。这个问题可以通过人工手动或借助算法来完成，这些图片可能包含了不同的物体，图片的大小可能不一致，颜色上也千差万别。图片仍可以根据它们所包含的边缘（edges），角（corners），区域（blobs）和脊（ridge）来做分类[1]。
 
@@ -11,6 +14,7 @@
 ### 评价指标
 TODO
 
+## 分析
 ### 数据的探索
 项目的数据集能直接从Kaggle[3]上下载。Kaggle一共提供了3个文件，train.zip是训练集，test.zip是测试集以及一个csv格式的submission文件。训练集包含了2个类别的图片，猫和狗的图片各12500张。测试集包含了12500图片。训练集下数据的根据其文件名提供了标签，文件名的格式是{类别}.{序号}.jpg，比如猫的图片名称为cat.1.jpg，狗的图片名称为dog.1.jpg。因此我们可以根据文件名，将其进行分类。而测试集的数据中并没有提供标签，文件名的格式是{序号}.jpg，比如1.jpg或2.jpg。同时数据集中的图片大小都是不一致的，需要在后续的步骤中处理这个问题。下面展示的是的训练集和测试集的部分数据。
 
@@ -24,7 +28,23 @@ TODO
 ![train set cat](images/test_set.PNG)
 
 ### 算法和技术
-项目中使用谷歌的TensorFlow[4]作为神经网络的平台，使用Keras[5]的API来构建并训练CNN。使用VGG[6]，ResNet[7]，InceptionV3[8]，Xception[9]作为项目的基础模型，这些模型已经全部封装在Keras的Application API[9]中了。
+项目中使用谷歌的TensorFlow[4]作为神经网络的平台，使用Keras[5]的API来构建并训练CNN。使用VGG[6]，ResNet[7]，InceptionV3[8]，Xception[9]作为项目的基础模型，这些基础模型得特征如下：
+
+- VGG: VGG网络架构最早由Simonyan和Zisserman在2014年提出，VGG网络架构比较简单，遵循基本卷积网络的原型布局，一系列卷积层、最大池化层和激活层，最后还有一些全连接的分类层。如下图是VGG的一个架构图：
+![VGG Net](images\imagenet_vgg16.png)
+而VGG16和VGG19中的16和19分别代表了权重的层数，如下图的D列及E列：
+![VGG Net](images\imagenet_vggnet_table.png)
+VGGNet主要有2个缺点，一个训练起来很慢，非常耗时。另外一个是模型weights很多，导致模型很大，训练时也会占用更多的磁盘和带宽。VGG16大约533MB，VGG19大约574MB。
+
+- ResNet：也叫残差网络，诞生于一个美丽而简单的观察：为什么非常深度的网络在增加更多层时会表现得更差？作者将这些问题归结成了一个单一的假设：直接映射是难以学习的。而且他们提出了一种修正方法：不再学习从 x 到 H(x) 的基本映射关系，而是学习这两者之间的差异，也就是「残差（residual）」,假设残差为 F(x)=H(x)-x，那么现在我们的网络不会直接学习 H(x) 了，而是学习 F(x)+x。这就带来了你可能已经见过的著名 ResNet（残差网络）模块。ResNet由多个残差模块组成，结果是好得出奇。ResNet的模型比VGG小许多，大概只有100MB左右。
+![ResNet](images/ResNet.png)
+
+- Inception：是GoogleNet的改版，V3，V4是Google后来起的不同的版本名称。这个网络的特点在课程中有介绍。在同一层同时采用3x3，1x1，5x5的Filter及一个3x3的max pooling，最后将这些不同Filter的结果组装，传输至下一层。如果 ResNet 是为了更深，那么 Inception 家族就是为了更宽。Inception的模型比VGGNet和ResNet都要小，大概只有96MB。
+![Inception module](images/Inception_module.png)
+
+- Xception：Xception的意思是extreme inception，而且正如其名字表达的那样，它将 Inception 的原理推向了极致。它的假设是：「跨通道的相关性和空间相关性是完全可分离的，最好不要联合映射它们。」
+![xception](images/xception.png)
+
 
 
 
