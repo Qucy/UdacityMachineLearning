@@ -14,7 +14,7 @@
 TODO
 
 ### 数据的探索
-项目的数据集能直接从Kaggle[10]上下载。Kaggle一共提供了3个文件，train.zip是训练集，test.zip是测试集以及一个csv格式的submission文件。训练集包含了2个类别的图片，猫和狗的图片各12500张。测试集包含了12500图片。训练集下数据的根据其文件名提供了标签，文件名的格式是{类别}.{序号}.jpg，比如猫的图片名称为cat.1.jpg，狗的图片名称为dog.1.jpg。因此我们可以根据文件，将其进行分类。而测试集的数据中并没有提供标签，文件名的格式是{序号}.jpg，比如1.jpg或2.jpg。同时数据集中的图片大小都是不一致的，需要在后续的步骤中处理这个问题。
+项目的数据集能直接从Kaggle[10]上下载。Kaggle一共提供了3个文件，train.zip是训练集，test.zip是测试集以及一个csv格式的submission文件。训练集包含了2个类别的图片，猫和狗的图片各12500张。测试集包含了12500图片。训练集下数据的根据其文件名提供了标签，文件名的格式是{类别}.{序号}.jpg，比如猫的图片名称为cat.1.jpg，狗的图片名称为dog.1.jpg。因此我们可以根据文件，将其进行分类。而测试集的数据中并没有提供标签，文件名的格式是{序号}.jpg，比如1.jpg或2.jpg。同时数据集中的图片大小都是不一致的，需要在后续的步骤中处理这个问题。下面3张图片展示的是的训练集和测试集的数据。
 
 训练集中猫的图片
 ![train set cat](images/train_set_cat.PNG)
@@ -26,9 +26,16 @@ TODO
 ![train set cat](images/test_set.PNG)
 
 ### 算法和技术
-项目中使用Keras的图片预处理API ImageDataGenerator[11]中的方法flow_from_directory加载数据集。首先需要将训练集划分到2个子文件夹中，猫的图片放入cat的文件夹中，狗的图片放入dog文件夹中，测试集全部划分到1个子文件夹中。同时使用flow_from_directory的参数target size来调整图片的大小，因为不同的CNN需要的输入的图片大小会有所区别，比如VGG和ResNet要求的图片大小为（224,224）而Xception和Inception需要的图片大小为（299,299）。在使用flow_from_directory读取图片后，调用model的方法predict_generator来进行预测。因为模型是没有包含toplayer的，所以得到会是所有训练集基于当前模型的一个深度特征。为了方便调试，这里把深度特征作为数组以文件的方式保存在本地。
+项目中使用Keras的图片预处理API ImageDataGenerator[11]中的方法flow_from_directory加载数据集。首先需要将训练集划分到2个子文件夹中，猫的图片放入cat的文件夹中，狗的图片放入dog文件夹中，测试集全部划分到1个子文件夹中。然后用flow_from_directory的参数target size来调整图片的大小，因为不同的CNN需要的输入的图片大小会有所区别，比如VGG和ResNet要求的图片大小为（224,224）而Xception和Inception需要的图片大小为（299,299）。再使用flow_from_directory读取图片后，调用model的方法predict_generator来进行预测。因为模型是没有包含toplayer的，所以得到会是所有训练集基于当前模型的一个深度特征。为了方便调试，这里把深度特征作为数组以文件的方式保存在本地。
 
-基于这些深度特征，再来调试自定义的模型，这里不需手动将训练集划分为训练数据和验证数据，Keras的ModelAPI[12]提供一个训练模型的方法fit。而fit中提供了一个参数validation_split可以自动帮助我们来划分训练数据和验证数据。比如validation_split = 0.2时，代表80%的数据用于训练，而剩下20%数据用于验证。
+因为使用了深度特征，所以项目的自定义模型不需要太复杂。自定义模型一共只包含了2层，第一层为BatcNormalization层，目的是为了防止过拟合。第二层为Dense层，激活函数为sigmod，目的是为了做最后的分类。构建完模型后，还需要调用model的compile方法来编译模型。编译模型时，我传递了3个参数，
+- 第一个是optimizer代表的是优化器，项目中使用的是Adam[?],xxxxx。
+- 第二个是loss代表的是损失函数，因为是二分类我使用的是binary_crossentropy。
+- 第三个是metrics代表的是衡量指标，这里可以传递的是数组，可以有1个或多个指标，我使用的是['accuracy']。
+
+模型编译完成后就可以开始训练模型，这里不需手动将训练集划分为训练数据和验证数据，Keras的ModelAPI[12]提供一个训练模型的方法fit。而fit中提供了一个参数validation_split可以自动帮助我们来划分训练数据和验证数据。比如validation_split = 0.2时，代表80%的数据用于训练，而剩下20%数据用于验证。
+
+最后我们使用测试集的深度特征作为输入，利用model的predict方法来进行预测。将最终结果写入到需要提交的csv文件当中，提交至Kaggle。
 
 ### 探索性可视化
 TODO 可视化深度特征
@@ -106,3 +113,20 @@ _（大概 1-2 页）_
 - 报告里提到的一些外部资料及来源是不是都正确引述或引用了？
 - 代码可读性是否良好？必要的注释是否加上了？
 - 代码是否可以顺利运行并重现跟报告相似的结果？
+
+
+引用
+[1] Wiki page, Feature detection:en.wikipedia.org/wiki/Feature_detection_(computer_vision)
+[2] Kaggle Project Dogs vs Cats:www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition
+[3] TensorFlowofficial site:tensorflow.google.cn
+[4] Kerasofficial site:keras.io
+[5] Karen Simonyan, Andrew Zisserman. Very Deep Convolutional Networks for Large-Scale Image Recognition. arXiv:1409.1556, 2014
+[6] Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun. Deep Residual Learning for Image Recognition. arXiv:1512.03385, 2015
+[7] Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe, Jonathon Shlens, Zbigniew Wojna. Rethinking the Inception Architecture for Computer Vision. arXiv:1512.00567, 2015
+[8] François Chollet. Xception: Deep Learning with Depthwise Separable Convolutions. arXiv:1610.02357, 2016
+[9] Keras applicationsintroduction:keras.io/applications/
+[10] Dogs vs Cats Datasets: www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data
+[11] Keras ImageDataGenerator introduction:keras.io/preprocessing/image/
+[] Diederik Kingma, Jimmy Ba. Adam: A Method for Stochastic Optimization. arXiv:1412.6980, 2014
+[12] Keras model API introduction: keras.io/models/model/
+[13] Kaggle Team, Dogs vs. Cats Redux Playground Competition, Winner's Interview
