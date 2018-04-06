@@ -31,21 +31,20 @@ TODO
 项目中使用谷歌的TensorFlow[4]作为神经网络的平台，使用Keras[5]的API来构建并训练CNN。使用VGG[6]，ResNet[7]，InceptionV3[8]，Xception[9]作为项目的基础模型，这些基础模型得特征如下：
 
 - VGG: VGG网络架构最早由Simonyan和Zisserman在2014年提出，VGG网络架构比较简单，遵循基本卷积网络的原型布局，一系列卷积层、最大池化层和激活层，最后还有一些全连接的分类层。如下图是VGG的一个架构图：
-![VGG Net](images\imagenet_vgg16.png)
-而VGG16和VGG19中的16和19分别代表了权重的层数，如下图的D列及E列：
-![VGG Net](images\imagenet_vggnet_table.png)
-VGGNet主要有2个缺点，一个训练起来很慢，非常耗时。另外一个是模型weights很多，导致模型很大，训练时也会占用更多的磁盘和带宽。VGG16大约533MB，VGG19大约574MB。
+![VGG Net](images/imagenet_vgg16.png)
+而VGG16和VGG19中的16和19分别代表了权重的层数，如下图的D列及E列。VGGNet主要有2个缺点，一个训练起来很慢，非常耗时。另外一个是模型weights很多，导致模型很大，训练时也会占用更多的磁盘和带宽。VGG16大约533MB，VGG19大约574MB。
+![VGG Net](images/imagenet_vggnet_table.png)
 
-- ResNet：也叫残差网络，诞生于一个美丽而简单的观察：为什么非常深度的网络在增加更多层时会表现得更差？作者将这些问题归结成了一个单一的假设：直接映射是难以学习的。而且他们提出了一种修正方法：不再学习从 x 到 H(x) 的基本映射关系，而是学习这两者之间的差异，也就是「残差（residual）」,假设残差为 F(x)=H(x)-x，那么现在我们的网络不会直接学习 H(x) 了，而是学习 F(x)+x。这就带来了你可能已经见过的著名 ResNet（残差网络）模块。ResNet由多个残差模块组成，结果是好得出奇。ResNet的模型比VGG小许多，大概只有100MB左右。
+- ResNet：也叫残差网络，诞生于一个美丽而简单的观察：为什么非常深度的网络在增加更多层时会表现得更差？作者将这些问题归结成了一个单一的假设：直接映射是难以学习的。而且他们提出了一种修正方法：不再学习从 x 到 H(x) 的基本映射关系，而是学习这两者之间的差异，也就是「残差（residual）」,假设残差为 F(x)=H(x)-x，那么现在我们的网络不会直接学习 H(x) 了，而是学习 F(x)+x。这就带来了你可能已经见过的著名 ResNet（残差网络）模块（如下图）。ResNet由多个残差模块组成，结果是好得出奇。ResNet的模型比VGG小许多，大概只有100MB左右。
 ![ResNet](images/ResNet.png)
 
-- Inception：是GoogleNet的改版，V3，V4是Google后来起的不同的版本名称。这个网络的特点在课程中有介绍。在同一层同时采用3x3，1x1，5x5的Filter及一个3x3的max pooling，最后将这些不同Filter的结果组装，传输至下一层。如果 ResNet 是为了更深，那么 Inception 家族就是为了更宽。Inception的模型比VGGNet和ResNet都要小，大概只有96MB。
+- Inception：第一版叫做GoogleNet，V3，V4是Google后来起的不同的版本名称。这个网络的特点在同一层同时采用3x3，1x1，5x5的Filter及一个3x3的max pooling来提取多个特征，再将这些不同特征组装。如下图：
 ![Inception module](images/Inception_module.png)
+如果ResNet是为了更深，那么 Inception 家族就是为了更宽。这种模型架构的信息密度更大了，这就带来了一个突出的问题：计算成本大大增加。所以作者使用 1×1 卷积来执行降维，一个 1×1 卷积一次仅查看一个值，但在多个通道上，它可以提取空间信息并将其压缩到更低的维度，如下图。Inception的模型比VGGNet和ResNet都要小，大概只有96MB。 
+![Inception module](images/Inception_module_1.png)
 
-- Xception：Xception的意思是extreme inception，而且正如其名字表达的那样，它将 Inception 的原理推向了极致。它的假设是：「跨通道的相关性和空间相关性是完全可分离的，最好不要联合映射它们。」
+- Xception：Xception的意思是extreme inception，而且正如其名字表达的那样，它将 Inception 的原理推向了极致。它的假设是：「跨通道的相关性和空间相关性是完全可分离的，最好不要联合映射它们。」Xception 不再只是将输入数据分割成几个压缩的数据块，而是为每个输出通道单独映射空间相关性，然后再执行 1×1 的深度方面的卷积来获取跨通道的相关性，如下图。Xception的模型最小大概只有89MB。 
 ![xception](images/xception.png)
-
-
 
 
 ### 探索性可视化
