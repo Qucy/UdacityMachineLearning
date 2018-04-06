@@ -8,13 +8,11 @@
 ### 问题陈述
 猫狗识别的项目属于监督学习中的分类问题，本项目中一共有2个类别，每一张图片只属于其中一个类别，项目的目标是利用CNN将图片划分到它们正确的类别中。因为从零开始训练一个卷积网络需要花费大量的时间和资源，这里会使用已经身经百战的CNN模型，并利用这些模型导出数据集的深度特征。然后基于这些深度特征来训练自定义的模型，并在最后验证自定的模型。
 
-本项目会使用谷歌的TensorFlow[3]作为神经网络的平台，使用Keras[4]的API来构建并训练CNN。这里会使用VGG[5]，ResNet[6]，InceptionV3[7]，Xception[8]作为我们的基础模型，这些模型已经全部封装在Keras的Application API[9]中了。
-
 ### 评价指标
 TODO
 
 ### 数据的探索
-项目的数据集能直接从Kaggle[10]上下载。Kaggle一共提供了3个文件，train.zip是训练集，test.zip是测试集以及一个csv格式的submission文件。训练集包含了2个类别的图片，猫和狗的图片各12500张。测试集包含了12500图片。训练集下数据的根据其文件名提供了标签，文件名的格式是{类别}.{序号}.jpg，比如猫的图片名称为cat.1.jpg，狗的图片名称为dog.1.jpg。因此我们可以根据文件名，将其进行分类。而测试集的数据中并没有提供标签，文件名的格式是{序号}.jpg，比如1.jpg或2.jpg。同时数据集中的图片大小都是不一致的，需要在后续的步骤中处理这个问题。下面展示的是的训练集和测试集的部分数据。
+项目的数据集能直接从Kaggle[3]上下载。Kaggle一共提供了3个文件，train.zip是训练集，test.zip是测试集以及一个csv格式的submission文件。训练集包含了2个类别的图片，猫和狗的图片各12500张。测试集包含了12500图片。训练集下数据的根据其文件名提供了标签，文件名的格式是{类别}.{序号}.jpg，比如猫的图片名称为cat.1.jpg，狗的图片名称为dog.1.jpg。因此我们可以根据文件名，将其进行分类。而测试集的数据中并没有提供标签，文件名的格式是{序号}.jpg，比如1.jpg或2.jpg。同时数据集中的图片大小都是不一致的，需要在后续的步骤中处理这个问题。下面展示的是的训练集和测试集的部分数据。
 
 训练集中猫的图片
 ![train set cat](images/train_set_cat.PNG)
@@ -26,14 +24,9 @@ TODO
 ![train set cat](images/test_set.PNG)
 
 ### 算法和技术
-项目中使用Keras的图片预处理API ImageDataGenerator[11]中的方法flow_from_directory加载数据集。首先需要将训练集划分到2个子文件夹中，猫的图片放入cat的文件夹中，狗的图片放入dog文件夹中，测试集全部划分到1个子文件夹中。然后用flow_from_directory的参数target size来调整图片的大小，因为不同的CNN需要的输入的图片大小会有所区别，比如VGG和ResNet要求的图片大小为（224,224）而Xception和Inception需要的图片大小为（299,299）。再使用flow_from_directory读取图片后，调用model的方法predict_generator来进行预测。因为模型是没有包含toplayer的，所以得到会是所有训练集基于当前模型的一个深度特征。为了方便调试，这里把深度特征作为数组以文件的方式保存在本地。
+项目中使用谷歌的TensorFlow[4]作为神经网络的平台，使用Keras[5]的API来构建并训练CNN。使用VGG[6]，ResNet[7]，InceptionV3[8]，Xception[9]作为项目的基础模型，这些模型已经全部封装在Keras的Application API[9]中了。
 
-因为使用了深度特征，所以项目的自定义模型不需要太复杂。自定义模型一共只包含了2层，第一层为BatcNormalization层，目的是为了防止过拟合。第二层为Dense层，激活函数为sigmod，目的是为了做最后的分类。构建完模型后，还需要调用model的compile方法来编译模型。编译模型时，我传递了3个参数，
-- 第一个是optimizer代表的是优化器，项目中使用的是Adam[?],这是一款常见的优化器，特点是计算效率较高，对内存要求比较少，默认参数的超参数大多数情况下基本够用了。
-- 第二个是loss代表的是损失函数，因为是二分类我使用的是binary_crossentropy。
-- 第三个是metrics代表的是衡量指标，这里可以传递的是数组，可以有1个或多个指标，我使用的是['accuracy']。
 
-模型编译完成后就可以开始训练模型，这里不需手动将训练集划分为训练数据和验证数据，Keras的ModelAPI[12]提供一个训练模型的方法fit。而fit中提供了一个参数validation_split可以自动帮助我们来划分训练数据和验证数据。比如validation_split = 0.2时，代表80%的数据用于训练，而剩下20%数据用于验证。最后当模型训练完成后，使用测试集的深度特征作为输入，利用model的predict方法来进行预测。将最终结果写入到需要提交的csv文件当中，提交至Kaggle。
 
 ### 探索性可视化
 TODO 可视化深度特征
@@ -45,9 +38,17 @@ TODO 可视化深度特征
 项目中一共对数据做了2次预处理，第一次因为flow_from_directory API的要求，对训练集中的2类图片进行了一个分类。根据图片的文件名称将2猫和狗的图片分别放在cat和dog的子文件夹中。同时把测试集的数据全部移动到一个子文件夹中。第二次是在导出深度特征导时，利用Lambda函数对输入的图片全部加了一个model.preproccess的预处理操作。比如VGG16，用的是vgg16.preprocess_input方法，而Xception用的是xception.preprocess_input方法（实际上调用的都是同一个方法，xception和inception指定了后台只能是TensorFlow）这样做的目的是将我们的0-255的RGB值缩小至-1到1的范围，好处是使得模型可以更快的收敛，缩短训练时间。
 
 ### 执行过程
-项目的执行过程主要分为以下3个步骤：
+项目中使用Keras的图片预处理API ImageDataGenerator[11]中的方法flow_from_directory加载数据集。首先需要将训练集划分到2个子文件夹中，猫的图片放入cat的文件夹中，狗的图片放入dog文件夹中，测试集全部划分到1个子文件夹中。然后用flow_from_directory的参数target size来调整图片的大小，因为不同的CNN需要的输入的图片大小会有所区别，比如VGG和ResNet要求的图片大小为（224,224）而Xception和Inception需要的图片大小为（299,299）。再使用flow_from_directory读取图片后，调用model的方法predict_generator来进行预测。因为模型是没有包含toplayer的，所以得到会是所有训练集基于当前模型的一个深度特征。为了方便调试，这里把深度特征作为数组以文件的方式保存在本地。
 
-1) 深度特征导出，项目里基于当前的训练集和测试集一共导出了5个模型的深度特征,每个文件都包括了训练集和测试集深度特征，详情如下：
+因为使用了深度特征，所以项目的自定义模型不需要太复杂。自定义模型一共只包含了2层，第一层为BatcNormalization层，目的是为了防止过拟合。第二层为Dense层，激活函数为sigmod，目的是为了做最后的分类。构建完模型后，还需要调用model的compile方法来编译模型。编译模型时，我传递了3个参数，
+- 第一个是optimizer代表的是优化器，项目中使用的是Adam[?],这是一款常见的优化器，特点是计算效率较高，对内存要求比较少，默认参数的超参数大多数情况下基本够用了。
+- 第二个是loss代表的是损失函数，因为是二分类我使用的是binary_crossentropy。
+- 第三个是metrics代表的是衡量指标，这里可以传递的是数组，可以有1个或多个指标，我使用的是['accuracy']。
+
+模型编译完成后就可以开始训练模型，这里不需手动将训练集划分为训练数据和验证数据，Keras的ModelAPI[12]提供一个训练模型的方法fit。而fit中提供了一个参数validation_split可以自动帮助我们来划分训练数据和验证数据。比如validation_split = 0.2时，代表80%的数据用于训练，而剩下20%数据用于验证。最后当模型训练完成后，使用测试集的深度特征作为输入，利用model的predict方法来进行预测。将最终结果写入到需要提交的csv文件当中，提交至Kaggle。
+
+
+- 深度特征导出，项目里基于当前的训练集和测试集一共导出了5个模型的深度特征,每个文件都包括了训练集和测试集深度特征，详情如下：
 
     |模型名称|总耗时（单位：秒）|深度特征文件大小（单位：MB）|
     | ------ | -----:|-----:|
@@ -57,36 +58,19 @@ TODO 可视化深度特征
     | InceptionV3 | 274.99 | 293|
     | Xception    | 416.50 | 293|
 
-2) 模型训练，项目中一共尝试了2种不同的方案，第一种方案是依次使用5个模型的深度特征来训练自定义模型，第二种方案是将5个模型的深度特征合并在一起来训练项目的自定义模型：
+- 模型训练，项目中一共尝试了2种不同的方案，第一种方案是依次使用5个模型的深度特征来训练自定义模型，第二种方案是将5个模型的深度特征合并在一起来训练项目的自定义模型：
   
   基于VGG16的深度特征，训练了200代，一共耗时175.38秒，训练集的最高准确率可以到达0.9897，验证集的最高准确率可以到达0.9744。训练集的最低loss为0.0310，测试集的最低loss为0.0685。优化器为Adam，并且修改了超参数lr=0.0001，其他超参数采用默认值。
 
-  ![VGG16 plot](images/vgg16_plot.PNG)
-
   基于VGG19的深度特征，训练了200代，一共耗时171.04秒，训练集的最高准确率可以到达0.9908，验证集的最高准确率可以到达0.9754。训练集的最低loss为0.0298，测试集的最低loss为0.0601。优化器为Adam，并且修改了超参数lr=0.0001，其他超参数采用默认值。
-
-  ![VGG19 plot](images/vgg19_plot.PNG)
 
   基于ResNet50的深度特征，训练了50代，训练一共耗时46.07秒，训练集的最高准确率可以到达0.9948，验证集的最高准确率可以到达0.9838。训练集的最低loss为0.0181，测试集的最低loss为0.0453。优化器为Adam，并且修改了超参数lr=0.0001，其他超参数采用默认值。
 
-  ![ResNet50 plot](images/resnet50_plot.PNG)
-
   基于InceptionV3的深度特征，训练了20代，训练一共耗时20.74秒，训练集的最高准确率可以到达0.9932，验证集的最高准确率可以到达0.9930。训练集的最低loss为0.0232，测试集的最低loss为0.0266。优化器为Adam，并且修改了超参数lr=0.00005，其他超参数采用默认值。
-
-  ![InceptionV3 plot](images/inceptionv3_plot.PNG)
 
   基于Xception的深度特征，训练了20代，训练一共耗时23.11秒，训练集的最高准确率可以到达0.9946，验证集的最高准确率可以到达0.9932。训练集的最低loss为0.0200，测试集的最低loss为0.0253。优化器为Adam，并且修改了超参数lr=0.00005，其他超参数采用默认值。
 
-  ![Xception plot](images/xception_plot.png)
-
   基于所有模型的深度特征，训练了50代，训练一共耗时67.65秒，训练集的最高准确率可以到达0.9954，验证集的最高准确率可以到达0.9940。训练集的最低loss为0.0162，测试集的最低loss为0.0203。优化器为Adam，并且修改了超参数lr=0.00007，decay=0.01，其他超参数采用默认值。
-
-   ![all model plot](images/all_model_features_plot.PNG)
-
-
-3) 模型评估，基于测试集，依次用以上模型做了预测之后，将结果按照Kaggle的格式要求生成一份csv文件，将文件提交至Kaggle后，得到以下评估结果（如下图）。其中表现最好的是方案2，采用所有模型的特征并进行迁移学习的自定义模型，得分为0.04128，可以排在1314中得第19名。表现最差的是仅仅对VGG16单个模型进行迁移学的自定义模型。
-
-   ![predictions](images/predictions.png)
 
 
 ### 完善
@@ -103,6 +87,10 @@ TODO 可视化深度特征
 - _模型是否对于这个问题是否足够稳健可靠？训练数据或输入的一些微小的改变是否会极大影响结果？（鲁棒性）_
 - _这个模型得出的结果是否可信？_
 
+模型评估，基于测试集，依次用以上模型做了预测之后，将结果按照Kaggle的格式要求生成一份csv文件，将文件提交至Kaggle后，得到以下评估结果（如下图）。其中表现最好的是方案2，采用所有模型的特征并进行迁移学习的自定义模型，得分为0.04128，可以排在1314中得第19名。表现最差的是仅仅对VGG16单个模型进行迁移学的自定义模型。
+
+    ![predictions](images/predictions.png)
+
 ### 合理性分析
 在这个部分，你需要利用一些统计分析，把你的最终模型得到的结果与你的前面设定的基准模型进行对比。你也分析你的最终模型和结果是否确确实实解决了你在这个项目里设定的问题。你需要考虑：
 - _最终结果对比你的基准模型表现得更好还是有所逊色？_
@@ -118,6 +106,18 @@ _（大概 1-2 页）_
 - _你是否对一个与问题，数据集，输入数据，或结果相关的，重要的技术特性进行了可视化？_
 - _可视化结果是否详尽的分析讨论了？_
 - _绘图的坐标轴，标题，基准面是不是清晰定义了？_
+
+  ![VGG16 plot](images/vgg16_plot.PNG)
+   
+  ![VGG19 plot](images/vgg19_plot.PNG)
+   
+  ![ResNet50 plot](images/resnet50_plot.PNG)
+   
+  ![InceptionV3 plot](images/inceptionv3_plot.PNG)
+  
+  ![Xception plot](images/xception_plot.png)
+  
+  ![all model plot](images/all_model_features_plot.PNG)
 
 
 ### 对项目的思考
@@ -148,16 +148,29 @@ _（大概 1-2 页）_
 
 引用
 [1] Wiki page, Feature detection:en.wikipedia.org/wiki/Feature_detection_(computer_vision)
+
 [2] Kaggle Project Dogs vs Cats:www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition
+
 [3] TensorFlowofficial site:tensorflow.google.cn
+
 [4] Kerasofficial site:keras.io
+
 [5] Karen Simonyan, Andrew Zisserman. Very Deep Convolutional Networks for Large-Scale Image Recognition. arXiv:1409.1556, 2014
+
 [6] Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun. Deep Residual Learning for Image Recognition. arXiv:1512.03385, 2015
+
 [7] Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe, Jonathon Shlens, Zbigniew Wojna. Rethinking the Inception Architecture for Computer Vision. arXiv:1512.00567, 2015
+
 [8] François Chollet. Xception: Deep Learning with Depthwise Separable Convolutions. arXiv:1610.02357, 2016
+
 [9] Keras applicationsintroduction:keras.io/applications/
+
 [10] Dogs vs Cats Datasets: www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data
+
 [11] Keras ImageDataGenerator introduction:keras.io/preprocessing/image/
+
 [] Diederik Kingma, Jimmy Ba. Adam: A Method for Stochastic Optimization. arXiv:1412.6980, 2014
+
 [12] Keras model API introduction: keras.io/models/model/
+
 [13] Kaggle Team, Dogs vs. Cats Redux Playground Competition, Winner's Interview
