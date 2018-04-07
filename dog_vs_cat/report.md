@@ -49,7 +49,7 @@ TODO 可视化深度特征
 ### 执行过程
 首先需使用Kearas的Application API[10]来获取这些模型，比如通过keras.applications.vgg16.VGG16(include_top=False, weights='imagenet')来获取VGG16的模型，include_top要设置成False，代表获取的模型不包含最后的全连接层。weights要设置层‘imagenet’代表获取的权重是pre-train过的。
 
-其次使用Keras的图片预处理API ImageDataGenerator[11]中的方法flow_from_directory加载数据集。通过参数target size来调整图片的大小，因为不同的CNN需要的输入的图片大小会有所区别，比如VGG和ResNet要求的图片大小为（224,224）而Xception和Inception需要的图片大小为（299,299）。最后方法会返回一个tuple包含了图片的数据，图片数据对应的标签。
+其次使用Keras的图片预处理API ImageDataGenerator[11]中的方法flow_from_directory加载数据集。通过参数target size来调整图片的大小，因为不同的CNN需要的输入的图片大小会有所区别，比如VGG和ResNet要求的图片大小为（224,224）而Xception和Inception需要的图片大小为（299,299）。最后方法会返回一个tuple包含了图片的特征及对应的标签。
 
 最后，有了基础的model，图片的数据及标签后，调用model的方法predict_generator来进行预测。得到所有训练集基于当前基础模型的一个深度特征。为了方便后期调试，这里我使用了HDF5 for python的API[12]把所有模型的深度特征保存在本地。
 
