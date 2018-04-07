@@ -49,13 +49,11 @@ TODO 可视化深度特征
 ### 执行过程
 首先需使用Kearas的Application API[10]来获取这些模型，比如通过keras.applications.vgg16.VGG16(include_top=False, weights='imagenet')来获取VGG16的模型，include_top要设置成False，代表获取的模型不包含最后的全连接层。weights要设置层‘imagenet’代表获取的权重是pre-train过的。
 
-其次使用Keras的图片预处理API ImageDataGenerator[11]中的方法flow_from_directory加载数据集。通过参数target size来调整图片的大小，因为不同的CNN需要的输入的图片大小会有所区别，比如VGG和ResNet要求的图片大小为（224,224）而Xception和Inception需要的图片大小为（299,299）。最后方法会返回一个tuple包含了图片的特征及对应的标签。
+其次使用Keras的图片预处理API ImageDataGenerator[11]中的方法flow_from_directory加载数据集。通过参数target size来调整图片的大小，因为不同的CNN需要的输入的图片大小会有所区别，比如VGG和ResNet要求的图片大小为（224,224）而Xception和Inception需要的图片大小为（299,299）。然后调用model的方法predict_generator来进行预测。得到所有训练集基于当前基础模型的一个深度特征。为了方便后期调试，这里我使用了HDF5 for python的API[12]把所有模型的深度特征保存在本地。
 
-最后，有了基础的model，图片的数据及标签后，调用model的方法predict_generator来进行预测。得到所有训练集基于当前基础模型的一个深度特征。为了方便后期调试，这里我使用了HDF5 for python的API[12]把所有模型的深度特征保存在本地。
+之后项目自定义一个模型来基于深度特征进行迁移学习。自定义模型一共只包含了2层，第一层为BatcNormalization层，目的是为了防止过拟合。第二层为Dense层，激活函数为sigmod，目的是为了做最后的分类。构建完模型后，还需要调用model的compile方法来编译模型。编译模型时，我传递了3个参数，第一个是optimizer代表的是优化器，项目中使用的是Adam[13],这是一款常见的优化器，特点是计算效率较高，对内存要求比较少，默认参数的超参数大多数情况下基本够用了。第二个是loss代表的是损失函数，因为是二分类我使用的是binary_crossentropy。第三个是metrics代表的是衡量指标，这里可以传递的是数组，可以有1个或多个指标，我使用的是['accuracy']。
 
-在成功导出了深度特征之后，其次项目需要自定义一个模型来进行迁移学习。自定义模型一共只包含了2层，第一层为BatcNormalization层，目的是为了防止过拟合。第二层为Dense层，激活函数为sigmod，目的是为了做最后的分类。构建完模型后，还需要调用model的compile方法来编译模型。编译模型时，我传递了3个参数，第一个是optimizer代表的是优化器，项目中使用的是Adam[13],这是一款常见的优化器，特点是计算效率较高，对内存要求比较少，默认参数的超参数大多数情况下基本够用了。第二个是loss代表的是损失函数，因为是二分类我使用的是binary_crossentropy。第三个是metrics代表的是衡量指标，这里可以传递的是数组，可以有1个或多个指标，我使用的是['accuracy']。
-
-模型编译完成后就可以开始训练模型，这里不需手动将训练集划分为训练数据和验证数据，Keras的Model API[14]提供一个训练模型的方法fit。而fit中提供了一个参数validation_split可以自动帮助我们来划分训练数据和验证数据。比如validation_split = 0.2时，代表80%的数据用于训练，而剩下20%数据用于验证。最后当模型训练完成后，使用测试集的深度特征作为输入，利用model的predict方法来进行预测。将最终结果写入到需要提交的csv文件当中，提交至Kaggle。
+模型compile后开始训练模型，这里不需手动将训练集划分为训练数据和验证数据，Keras的Model API[14]提供一个训练模型的方法fit。而fit中提供了一个参数validation_split可以自动帮助我们来划分训练数据和验证数据。比如validation_split = 0.2时，代表80%的数据用于训练，而剩下20%数据用于验证。最后当模型训练完成后，使用测试集的深度特征作为输入，利用model的predict方法来进行预测。将最终结果写入到需要提交的csv文件当中，提交至Kaggle。
 
 项目中我训练了以下场景，并记录了以下数据：
 - 基于VGG16的迁移学习的模型200代，一共耗时175.38秒，训练集的最高准确率可以到达0.9897，验证集的最高准确率可以到达0.9744。训练集的最低loss为0.0310，测试集的最低loss为0.0685。
