@@ -41,6 +41,7 @@ pip install --ignore-installed --upgrade pillow
 conda install opencv
 conda install pandas
 conda install matplotlib
+conda install h5py
 ```
 至此环境准备完毕
 
