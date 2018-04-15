@@ -20,10 +20,8 @@ TODO
 
 训练集中猫的图片
 ![train set cat](images/train_set_cat.PNG)
-
 训练集中狗的图片
 ![train set cat](images/train_set_dog.PNG)
-
 测试集中的图片
 ![train set cat](images/test_set.PNG)
 
@@ -44,7 +42,10 @@ TODO 可视化深度特征
 
 ## 方法
 ### 数据预处理
-项目中一共对数据做了2次预处理，第一次因为flow_from_directory API的要求，对训练集中的2类图片进行了一个分类。根据图片的文件名称将2猫和狗的图片分别放在cat和dog的子文件夹中。同时把测试集的数据全部移动到一个子文件夹中。第二次是在导出深度特征导时，利用Lambda函数对输入的图片全部加了一个model.preproccess的预处理操作。比如VGG16，用的是vgg16.preprocess_input方法，而Xception用的是xception.preprocess_input方法（实际上调用的都是同一个方法，xception和inception指定了后台只能是TensorFlow）这样做的目的是将我们的0-255的RGB值缩小至-1到1的范围，好处是使得模型可以更快的收敛，缩短训练时间。
+项目中一共对数据做了3次预处理：
+- 第一次因为flow_from_directory API的要求，对训练集中的2类图片进行了一个分类。根据图片的文件名称将2猫和狗的图片分别放在cat和dog的子文件夹中。同时把测试集的数据全部移动到一个子文件夹中。
+- 第二次是在数据探索的时候移除了异常的图片。首先利用Xcepton模型对所有训练集做预测，根据排名前20标签找出Xception模型认为既不是狗也不是猫的图片。然后再利用Inception和Resnet以及人工判断的方法来移除误判的图片。最终将剩下的异常图片全部移除训练集。
+- 第三次是在导出深度特征导时，利用Lambda函数对输入的图片全部加了一个model.preproccess的预处理操作。比如VGG16，用的是vgg16.preprocess_input方法，而Xception用的是xception.preprocess_input方法（实际上调用的都是同一个方法，xception和inception指定了后台只能是TensorFlow）这样做的目的是将我们的0-255的RGB值缩小至-1到1的范围，好处是使得模型可以更快的收敛，缩短训练时间。
 
 ### 执行过程
 首先需使用Kearas的Application API[10]来获取这些模型，比如通过keras.applications.vgg16.VGG16(include_top=False, weights='imagenet')来获取VGG16的模型，include_top要设置成False，代表获取的模型不包含最后的全连接层。weights要设置层‘imagenet’代表获取的权重是pre-train过的。
