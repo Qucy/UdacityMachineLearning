@@ -30,7 +30,7 @@ This repository is reagrding machine learning course i took at Udacity China.
 - Explore your data and visulize some features which have very big and very small numbers
 - Using log function to handle skewed data which find by last step
 - Using sickit-learn MinMaxScaler to normalize your data
-- Using pandas get_dummies to one-hot encode your data
+- Using pandas get_dummies to do one-hot encode your data
 - Understand recall, precision, F-Beta score and use F score to evaluate your model
 - Understand basic classification models like, decision tree, Navie Bayes, Bagging, Boosting, SVM and NN.
 - Understand the pros and cons regarding above models.
