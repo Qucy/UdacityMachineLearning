@@ -1,7 +1,7 @@
 # Udacity Machine Learning(Advanced)
 This repository is reagrding machine learning course i took at Udacity China.
 
-##Projects
+## Projects
 
 ### P0 - Titanic survival exploration
 - ENV : Anaconda + Jupyter notebook + python 2.7
@@ -9,7 +9,7 @@ This repository is reagrding machine learning course i took at Udacity China.
 
 ### P1 - Boston housing
 - ENV : Anaconda + Jupyter notebook + python 2.7
-- Regression problem regarding supervise learning
+- Regression problem regarding supervised learning
 - Use numpy API to calculate max,min,median and std(do not use pandas API std is different with numpy's std).
 - Understanding the features
 - Split data into train and test
@@ -24,7 +24,21 @@ This repository is reagrding machine learning course i took at Udacity China.
 
 ### P2 - Finding donors
 - ENV : Anaconda + Jupyter notebook + python 2.7
-- 
+- Binary classification problem reagrding supervised learning
+- Glance your data like how many data in total, how many categories in total ect.
+- Using pandas API to extract your features and labels from pandas dataframe
+- Explore your data and visulize some features which have very big and very small numbers
+- Using log function to handle skewed data which find by last step
+- Using sickit-learn MinMaxScaler to normalize your data
+- Using pandas get_dummies to one-hot encode your data
+- Understand recall, precision, F-Beta score and use F score to evaluate your model
+- Understand basic classification models like, decision tree, Navie Bayes, Bagging, Boosting, SVM and NN.
+- Understand the pros and cons regarding above models.
+- Choose 3 models and train them, find best models according to their F-score and accuracy
+- Using GridSearhCV to find best parameters
+- Using model.feature_importances_ to find most 5 important features
+- Train and validate model if only use these 5 features to train your model
+- Evaluate model via test data
 
 ### P3 - Creating customer segments
 
