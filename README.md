@@ -30,14 +30,14 @@ This repository is reagrding machine learning course i took at Udacity China.
 - Explore your data and visulize some features which have very big and very small numbers
 - Using log function to handle skewed data which find by last step
 - Using sickit-learn MinMaxScaler to normalize your data
-- Using pandas get_dummies to do one-hot encode your data
-- Understand recall, precision, F-Beta score and use F score to evaluate your model
+- Using pandas get_dummies to do one-hot encode
+- Understand recall, precision, F-score and use F-score to evaluate your model
 - Understand basic classification models like, decision tree, Navie Bayes, Bagging, Boosting, SVM and NN.
 - Understand the pros and cons regarding above models.
 - Choose 3 models and train them, find best models according to their F-score and accuracy
-- Using GridSearhCV to find best parameters
+- Using GridSearhCV to find best parameters for your best model
 - Using model.feature_importances_ to find most 5 important features
-- Train and validate model if only use these 5 features to train your model
+- Train and validate model only using most 5 important features to train your model
 - Evaluate model via test data
 
 ### P3 - Creating customer segments
@@ -46,7 +46,7 @@ This repository is reagrding machine learning course i took at Udacity China.
 - Using pandas API dataframe.describe to glance data
 - Understand KDE and find correlations between features
 - Understand correlation
-- Using [tukey method](http://datapigtechnologies.com/blog/index.php/highlighting-outliers-in-your-data-with-the-tukey-method/) to find outliers
+- Using [tukey method](http://datapigtechnologies.com/blog/index.php/highlighting-outliers-in-your-data-with-the-tukey-method/) to find outliers and remove outliers
 - Understand PCA and analyze PCA
 - Use PCA to transform data
 - Understand and explain bio-plot
