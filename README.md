@@ -42,7 +42,7 @@ This repository is reagrding machine learning course i took at Udacity China.
 
 ### P3 - Creating customer segments
 - ENV : Anaconda + Jupyter notebook + python 2.7
-- Clustering problem regarding unsupervised problem
+- Clustering problem regarding unsupervised learning
 - Using pandas API dataframe.describe to glance data
 - Understand KDE and find correlations between features
 - Understand correlation
