@@ -41,6 +41,18 @@ This repository is reagrding machine learning course i took at Udacity China.
 - Evaluate model via test data
 
 ### P3 - Creating customer segments
+- ENV : Anaconda + Jupyter notebook + python 2.7
+- Clustering problem regarding unsupervised problem
+- Using pandas API dataframe.describe to glance data
+- Understand KDE and find correlations between features
+- Understand correlation
+- Using [tukey method](http://datapigtechnologies.com/blog/index.php/highlighting-outliers-in-your-data-with-the-tukey-method/) to find outliers
+- Understand PCA and analyze PCA
+- Use PCA to transform data
+- Understand and explain bio-plot
+- Unserstand and compare K-means with Gaussion Mixture
+- Choose one as your model train and predict
+- Use cluster result as one feature may help improve model performance(Unspuervised learning can help supervised learning)
 
 ### P4 - Qlearning robot new
 
