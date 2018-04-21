@@ -14,7 +14,7 @@ This repository is reagrding machine learning course i took at Udacity China.
 - Understanding the features
 - Split data into train and test
 - [R2 score](https://en.wikipedia.org/wiki/Coefficient_of_determination)
-- Understand learing curve when will overfit
+- Understand learning curve when will overfit
 - Understand K-fold cross-validation
 - Understand and use scikit-learning API GridSearchCV to find best parameters
 - Understand and use quartile calculator to analyze data
