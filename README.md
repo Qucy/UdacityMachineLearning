@@ -55,7 +55,28 @@ This repository is reagrding machine learning course i took at Udacity China.
 - Use cluster result as one feature may help improve model performance(Unspuervised learning can help supervised learning)
 
 ### P4 - Qlearning robot new
+- ENV : Anaconda + Jupyter notebook + python 3.5
+- Reinforcement learning problem
+- Understand Markov decision process
+- Understand environment,state,action and reward
+- Understand Q-learning
+- Implement Q-learning in python
+- Understand parameter like epsilon, gamma, alpha and epoch
+- Train models with different parameters
+- Understand how parameter will affect each other
 
 ### P5 - Dog project
+- ENV : Anaconda + Jupyter notebook + python 3.5
+- Understand Tensorflow and Keras
+- Understand converlutional layer, max pooling layer, averaging layer and dense layer
+- Understand transfer learning
+- Construct your CNN via Keras API
+- Using transfer learning train your model
+- Evaluate your model use other images
 
 ### P6 - Capstone project dog_vs_cat
+- ENV : Anaconda + Jupyter notebook + python 3.5
+- Write proposal
+- Write your own code
+- Write your report
+
