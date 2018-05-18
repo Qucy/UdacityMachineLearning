@@ -80,3 +80,5 @@ This repository is reagrding machine learning course i took at Udacity China.
 - Write your own code
 - Write your report
 
+### Nano Degree
+- [Machine Learning Advanced Nano Degree](https://confirm.udacity.com/NNHEDYSK)
