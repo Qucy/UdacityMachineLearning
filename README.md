@@ -1,5 +1,5 @@
 # Udacity Machine Learning(Advanced)
-This repository is reagrding machine learning course i took at Udacity China.
+This repository is regarding machine learning course i took at Udacity China.
 
 ## Projects
 
