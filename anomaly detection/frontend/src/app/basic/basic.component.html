@@ -1,0 +1,83 @@
+<div style="width:100%; height:100%;">
+  <div class="menu--secondary">
+    <ul class="menu">
+      <li>
+        <a href="basic" class="active herffont">Basic</a>
+      </li>
+      <li>
+        <a href="auto" class="herffont">Auto</a>
+      </li>
+    </ul>
+  </div>
+  <div div style="width:100%; height:95%;">
+    <div style="width:50%; height:100%;float: left;">
+      <div style="width:100%; height:10%;">
+        <h2 align="center" vertical="center">Basic Model</h2>
+      </div>
+      <div style="width:100%;">
+        <img src="{{imgUrl}}" style="width:100%; height:100%;" />
+      </div>
+      <div style="text-align:center; height:50px;"> 
+        <button style="margin-top:10px;margin-right:10px;height:30px;" (click)="train()">Train</button> 
+        <button style="margin-top:10px;height:30px;" (click)="benchmark()">Validate</button>
+      </div>
+    </div>
+    <div style="width:50%; height:100%;float: left;background-color: rgb(252, 252, 253);">
+      <div style="padding-left:50px;padding-right:50px;">
+        <h2 align="center" vertical="center">Test</h2>
+        <form style="margin-top:0px;" [formGroup]="form">
+          <div style="margin-top:5px;">
+            <div style="float: left; width:15%; margin-top: 20px;"><label for="time">Time:</label></div>
+            <div style="float: left; width:85%;"><ng5-slider [(value)]="hackathon.time" [options]="timeOptions"></ng5-slider></div>
+          </div>
+          <div style="margin-top:5px;">
+            <div style="float: left; width:15%; margin-top: 20px;"><label for="cpu">CPU:</label></div>
+            <div style="float: left; width:85%;"><ng5-slider [(value)]="hackathon.cpu" [options]="options"></ng5-slider></div>
+          </div> 
+          <div style="margin-top:5px;">
+            <div style="float: left; width:15%; margin-top: 20px;"><label for="network">Network:</label></div>
+            <div style="float: left; width:85%;"><ng5-slider [(value)]="hackathon.network" [options]="options"></ng5-slider></div>
+          </div>  
+          <div style="text-align:center;"> 
+            <button style="margin-top:0px;height:30px;" (click)="predict()">Predict</button>
+            <button *ngIf="predictResult == 'Normal'" style="margin-top:0px;height:30px;margin-left:10px; background-color:green" (click)="openModal(template)">{{predictResult}}</button>
+            <button *ngIf="predictResult == 'Anomaly'" style="margin-top:0px;height:30px;margin-left:10px; background-color:red" (click)="openModal(template)">{{predictResult}}</button>            
+          </div>  
+          <ng-template #template>
+            <div class="modal-header">
+              <h4 class="modal-title pull-left">Test Result</h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <img src="{{testResultImgUrl}}" style="width:100%; height:100%;" />
+            </div>
+          </ng-template>
+        </form>
+      </div>
+      <div style="text-align:center;padding-top:10px; padding-left:50px;padding-right:50px;">
+        <table style="width:100%;">
+          <tr>
+            <th>Time</th>
+            <th>CPU Range</th>
+            <th>CPU</th>
+            <th>Network Range</th>
+            <th>Network</th>
+            <th>Predict</th> 
+          </tr>
+          <tr *ngFor = "let model of testArr">
+            <td>{{model.time}}</td>
+            <td>{{model.cpuRange}}</td>
+            <td>{{model.cpu}}</td>
+            <td>{{model.networkRange}}</td> 
+            <td>{{model.network}}</td> 
+            <td *ngIf="model.predict == model.expect"  style="background-color:green;">{{model.predict==1?"Normal":"Anomaly"}}</td>
+            <td *ngIf="model.predict !== undefined && model.predict != model.expect" style="background-color:red;">{{model.predict==1?"Normal":"Anomaly"}}</td>    
+            <td *ngIf="model.predict === undefined" ></td>          
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div> 
+</div>
