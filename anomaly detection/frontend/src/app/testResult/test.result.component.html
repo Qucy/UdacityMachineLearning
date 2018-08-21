@@ -1,0 +1,7 @@
+<div class="modal-wrapper confirm" *ngIf="hasOpen" tabindex="-1" role="dialog">
+    <div class="modal-inner">
+        <div class="modal-close" (click)="onHandleClose()"></div>
+        <h2 class="center">App Key Show</h2> 
+        <a (click)="onHandleClose()" class="button primary">Close</a>
+    </div>
+</div>
