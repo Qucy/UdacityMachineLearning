@@ -1,0 +1,46 @@
+.menu { 
+  margin: 0 auto;
+
+  li {
+    display: inline-block;
+
+    a {
+      display: block;
+      padding: 14px 24px;
+      font-size: 16px;
+      text-decoration: none;
+      color: white;
+
+      &.active, &:hover {
+        background-color: #fff;
+        color: #050A1D;
+      }
+    }
+  }
+} 
+
+.menu--secondary {
+  border-bottom: 1px solid gray;
+  padding: 0 12px;
+
+  li {
+    margin-right: 24px;
+    padding: 0 12px;
+
+    &:first-child {
+      padding-left: 12px;
+    }
+      a {
+      padding: 14px 0;
+      color: #050A1D;
+      border-bottom: 2px solid white;
+
+      &.active, &:hover {
+        border-bottom: 2px solid #007B8C;
+      }
+    }
+  }
+
+
+}
+  
